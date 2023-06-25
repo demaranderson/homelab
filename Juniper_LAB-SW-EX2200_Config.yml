@@ -23,6 +23,5 @@
     - name: Set root user password
       junipernetworks.junos.junos_user:
         name: root
-        role: super-user
         encrypted_password: "$6$t2bUAuGGws3Cn4nt$MC9bt4PxKFpyfoCxtWL05oSW0bEHYudCQzej0P2.aviaNrcc/fwc0pCTmuO4YG56nw.8aQk5yS8lUpXfeWPcW0"
         state: present
