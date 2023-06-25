@@ -1,0 +1,18 @@
+---
+- name: Configure Juniper LAB-SW-EX2200
+  hosts: LAB-SW-EX2200
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Set management interface IP address
+      juniper_junos_config:
+        lines:
+          - set system host-name LAB-SW-EX2200
+          - set system services ssh protocol-version v2
+          - set interfaces me0 unit 0 family inet address 192.168.1.254/24
+          - set protocols lldp interface all
+          - set protocols lldp-med interface all
+          - set poe interface all
+          - set system root-authentication plain-text-password "Pa$$w0rd"
+        commit: yes
