@@ -1,26 +1,30 @@
 ---
 - name: Configure Juniper LAB-SW-EX2200
   hosts: LAB-SW-EX2200
-  gather_facts: no
-  connection: network_cli
-  become: yes
+  gather_facts: yes
+  connection: "{{ 'network_cli' if ansible_netmiko_platform == 'juniper_junos' else 'local' }}"
 
   vars:
     ansible_network_os: junos
+    hostname: LAB-SW-EX2200
+    management_ip: 192.168.1.254/24
+    root_password: Pa$$w0rd
 
   tasks:
     - name: LAB-SW-EX2200 Device Config
       junipernetworks.junos.junos_config:
         lines:
-          - set system host-name LAB-SW-EX2200
-          - set system services ssh protocol-version v2
-          - set interfaces me0 unit 0 family inet address 192.168.1.254/24
-          - set protocols lldp interface all
-          - set protocols lldp-med interface all
-          - set poe interface all
-          - set system root-authentication plaintext-password Pa$$w0rd
+          - "set system host-name {{ hostname }}"
+          - "set system services ssh protocol-version v2"
+          - "set interfaces me0 unit 0 family inet address {{ management_ip }}"
+          - "set protocols lldp interface all"
+          - "set protocols lldp-med interface all"
+          - "set poe interface all"
+          - "set system root-authentication plain-text-password {{ root_password }}"
+      when: ansible_netmiko_platform == 'juniper_junos'  # Only execute for Juniper devices
 
     - name: Commit configuration changes
       junipernetworks.junos.junos_command:
         commands:
-          - commit
+          - "commit"
+      when: ansible_netmiko_platform == 'juniper_junos'  # Only execute for Juniper devices
