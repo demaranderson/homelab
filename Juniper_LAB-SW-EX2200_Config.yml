@@ -19,4 +19,8 @@
           - set protocols lldp-med interface all
           - set poe interface all
           - set system root-authentication plaintext-password Pa$$w0rd
-        commit: yes
+
+    - name: Commit configuration changes
+      junipernetworks.junos.junos_command:
+        commands:
+          - commit
