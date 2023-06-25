@@ -14,6 +14,6 @@
           - show configuration
       register: config_output
 
-    - name: Display configuration
+    - name: Display configurations
       debug:
         var: config_output.stdout_lines[0]
