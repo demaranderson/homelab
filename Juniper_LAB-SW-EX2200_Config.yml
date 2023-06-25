@@ -5,6 +5,9 @@
   connection: network_cli
   become: yes
 
+  vars:
+    ansible_network_os: junos
+
   tasks:
     - name: Set management interface IP address
       junipernetworks.junos.junos_config:
