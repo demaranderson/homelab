@@ -1,3 +1,4 @@
+---
 - name: Configure Juniper LAB-SW-EX2200
   hosts: LAB-SW-EX2200
   gather_facts: no
@@ -11,6 +12,7 @@
       junipernetworks.junos.junos_command:
         commands:
           - configure
+          - set system root-authentication encrypted-password "$6$t2bUAuGGws3Cn4nt$MC9bt4PxKFpyfoCxtWL05oSW0bEHYudCQzej0P2.aviaNrcc/fwc0pCTmuO4YG56nw.8aQk5yS8lUpXfeWPcW0"
           - delete system services dhcp
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
@@ -19,9 +21,3 @@
           - set protocols lldp-med interface all
           - set poe interface all
           - commit
-
-    - name: Set root user password
-      junipernetworks.junos.junos_user:
-        name: root
-        encrypted_password: "$6$t2bUAuGGws3Cn4nt$MC9bt4PxKFpyfoCxtWL05oSW0bEHYudCQzej0P2.aviaNrcc/fwc0pCTmuO4YG56nw.8aQk5yS8lUpXfeWPcW0"
-        state: present
