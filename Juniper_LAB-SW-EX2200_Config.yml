@@ -1,4 +1,3 @@
----
 - name: Configure Juniper LAB-SW-EX2200
   hosts: LAB-SW-EX2200
   gather_facts: no
@@ -9,7 +8,8 @@
 
   tasks:
     - name: Configure device
-      junipernetworks.junos.junos_command:
+      expect:
+        command: junos_command
         commands:
           - configure
           - delete system services dhcp
@@ -19,4 +19,8 @@
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set poe interface all
-          - commit
+          - set system root-authentication plain-text-password
+        responses:
+          'New password:': "Pa$$w0rd"
+          'Retype new password:': "Pa$$w0rd"
+          '.*': "commit"
