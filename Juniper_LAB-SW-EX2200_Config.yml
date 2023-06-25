@@ -8,8 +8,16 @@
 
   tasks:
     - name: Configure device
-      expect:
-        command: junos_command
+      command:
+        cmd: junos_command
+        prompt:
+          - 'New password:'
+          - 'Retype new password:'
+          - '.*'
+        answer:
+          - 'Pa$$w0rd'
+          - 'Pa$$w0rd'
+          - 'commit'
         commands:
           - configure
           - delete system services dhcp
@@ -20,7 +28,8 @@
           - set protocols lldp-med interface all
           - set poe interface all
           - set system root-authentication plain-text-password
-        responses:
-          'New password:': "Pa$$w0rd"
-          'Retype new password:': "Pa$$w0rd"
-          '.*': "commit"
+
+      register: result
+
+    - debug:
+        var: result
