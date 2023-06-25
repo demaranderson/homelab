@@ -9,8 +9,10 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Set management interface IP address
-      junipernetworks.junos.junos_config:
+    - name: LAB-SW-EX2200 Device Config
+      juniper.device.config:
+        config_mode: "private"
+        load: "set"
         lines:
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
