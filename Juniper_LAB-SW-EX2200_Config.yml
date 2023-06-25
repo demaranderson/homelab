@@ -10,9 +10,7 @@
 
   tasks:
     - name: LAB-SW-EX2200 Device Config
-      juniper.device.config:
-        config_mode: "private"
-        load: "set"
+      junipernetworks.junos.junos_config:
         lines:
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
