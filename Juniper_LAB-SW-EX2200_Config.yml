@@ -12,6 +12,7 @@
       junipernetworks.junos.junos_command:
         commands:
           - configure
+          - delete system services dhcp
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
           - set interfaces me0 unit 0 family inet address 192.168.1.254/24
