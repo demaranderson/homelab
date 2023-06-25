@@ -8,15 +8,9 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Enter configuration mode
-      junipernetworks.junos.junos_command:
-        commands:
-          - configure
-      register: config_mode_output
-
     - name: Configure device
-      junipernetworks.junos.junos_command:
-        commands:
+      junipernetworks.junos.junos_config:
+        lines:
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
           - set interfaces me0 unit 0 family inet address 192.168.1.254/24
@@ -24,10 +18,8 @@
           - set protocols lldp-med interface all
           - set poe interface all
           - set system root-authentication plain-text-password Pa$$w0rd
-      when: config_mode_output is succeeded
+      register: config_output
 
-    - name: Commit configuration changes
-      junipernetworks.junos.junos_command:
-        commands:
-          - commit
-      when: config_mode_output is succeeded
+    - name: Print configuration output
+      debug:
+        var: config_output.changed
