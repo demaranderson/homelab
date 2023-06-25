@@ -8,16 +8,7 @@
 
   tasks:
     - name: Configure device
-      command:
-        cmd: junos_command
-        prompt:
-          - 'New password:'
-          - 'Retype new password:'
-          - '.*'
-        answer:
-          - 'Pa$$w0rd'
-          - 'Pa$$w0rd'
-          - 'commit'
+      junipernetworks.junos.junos_command:
         commands:
           - configure
           - delete system services dhcp
@@ -27,9 +18,11 @@
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set poe interface all
-          - set system root-authentication plain-text-password
+          - commit
 
-      register: result
-
-    - debug:
-        var: result
+    - name: Configure root user
+      junipernetworks.junos.junos_user:
+        username: root
+        password: Pa$$w0rd
+        privilege: "superuser"
+        state: present
