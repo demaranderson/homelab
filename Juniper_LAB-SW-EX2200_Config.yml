@@ -6,7 +6,7 @@
 
   tasks:
     - name: Set management interface IP address
-      juniper_junos_config:
+      junipernetworks.junos.junos_config:
         lines:
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
@@ -14,5 +14,5 @@
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set poe interface all
-          - set system root-authentication plain-text-password Pa$$w0rd
+          - set system root-authentication plaintext-password Pa$$w0rd
         commit: yes
