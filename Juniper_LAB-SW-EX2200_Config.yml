@@ -2,7 +2,8 @@
 - name: Configure Juniper LAB-SW-EX2200
   hosts: LAB-SW-EX2200
   gather_facts: no
-  connection: local
+  connection: network_cli
+  become: yes
 
   tasks:
     - name: Set management interface IP address
