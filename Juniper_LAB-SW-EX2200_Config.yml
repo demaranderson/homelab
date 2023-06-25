@@ -6,17 +6,22 @@
 
   vars:
     ansible_network_os: junos
+    root_password: "Pa$$w0rd"
 
   tasks:
     - name: Configure device
-      junipernetworks.junos.junos_command:
-        commands:
-          - configure
+      junipernetworks.junos.junos_config:
+        lines:
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
           - set interfaces me0 unit 0 family inet address 192.168.1.254/24
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set poe interface all
-          - set system root-authentication plain-text-password Pa$$w0rd
-          - commit
+      register: config_output
+
+    - name: Set root authentication password
+      junipernetworks.junos.junos_config:
+        lines:
+          - "set system root-authentication plain-text-password '{{ root_password }}'"
+      when: config_output.changed
