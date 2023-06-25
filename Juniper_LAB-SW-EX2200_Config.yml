@@ -9,8 +9,9 @@
 
   tasks:
     - name: Configure device
-      junipernetworks.junos.junos_config:
-        lines:
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
           - set system host-name LAB-SW-EX2200
           - set system services ssh protocol-version v2
           - set interfaces me0 unit 0 family inet address 192.168.1.254/24
@@ -18,8 +19,4 @@
           - set protocols lldp-med interface all
           - set poe interface all
           - set system root-authentication plain-text-password Pa$$w0rd
-      register: config_output
-
-    - name: Print configuration output
-      debug:
-        var: config_output.changed
+          - commit
