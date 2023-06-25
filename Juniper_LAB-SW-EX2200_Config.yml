@@ -23,7 +23,7 @@
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set poe interface all
-          - set system root-authentication plaintext-password Pa$$w0rd
+          - set system root-authentication plain-text-password Pa$$w0rd
       when: config_mode_output is succeeded
 
     - name: Commit configuration changes
