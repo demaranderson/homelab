@@ -1,0 +1,19 @@
+- name: Schedule playbook execution
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Add cron job
+      cron:
+        name: Run playbook daily
+        job: "ansible-playbook /etc/ansible/playbooks/01_esxi_license.yml -i /etc/ansible/inventories/hosts"
+        user: root
+        minute: 0
+        hour: 2
+        cron_file: my_cron_job
+      register: cron_result
+
+    - name: Enable cron job
+      command: crontab /etc/cron.d/my_cron_job
+      when: cron_result.changed
+
