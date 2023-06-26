@@ -8,9 +8,10 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Remove configuration
-      junipernetworks.junos.junos_system:
-        state: absent
+    - name: Delete configuration
+      junipernetworks.junos.junos_command:
+        commands:
+          - delete
 
     - name: Configure device
       junipernetworks.junos.junos_command:
