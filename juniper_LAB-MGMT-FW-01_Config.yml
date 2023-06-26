@@ -8,20 +8,9 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Delete configuration
-      junipernetworks.junos.junos_command:
-        commands:
-          - delete system
-          - delete interfaces
-          - delete security
-          - delete routing-options
-          - delete protocols
-          - delete policy-options
-          - delete firewall
-          - delete vlans
-          - delete snmp
-          - delete syslog
-          - delete chassis
+    - name: Remove configuration
+      junipernetworks.junos.junos_system:
+        state: absent
 
     - name: Configure device
       junipernetworks.junos.junos_command:
