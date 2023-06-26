@@ -8,37 +8,9 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Delete configuration
-      junipernetworks.junos.junos_command:
-        commands:
-          - configure
-          - delete access
-          - delete access-profile
-          - delete accounting-options
-          - delete applications
-          - delete apply-groups
-          - delete bridge-domains
-          - delete chassis
-          - delete class-of-service
-          - delete ethernet-switching-options
-          - delete event-options
-          - delete firewall
-          - delete forwarding-options
-          - delete groups
-          - delete interfaces
-          - delete multicast-snooping-options
-          - delete policy-options
-          - delete protocols
-          - delete routing-instances
-          - delete routing-options
-          - delete schedulers
-          - delete security
-          - delete services
-          - delete smtp
-          - delete snmp
-          - delete switch-options
-          - delete system
-          - delete vlans
+    - name: Zero out the current configuration
+      junipernetworks.junos.junos_config:
+        zeroize: true
 
     - name: Configure device
       junipernetworks.junos.junos_command:
@@ -50,7 +22,6 @@
           - set interfaces ge-0/0/0 unit 0 family inet address 192.168.1.248/24
           - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
           - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
-
 
     - name: Commit configuration
       junipernetworks.junos.junos_command:
