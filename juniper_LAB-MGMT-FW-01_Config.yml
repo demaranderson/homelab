@@ -7,11 +7,10 @@
   vars:
     ansible_network_os: junos
 
-   tasks:
+  tasks:
     - name: Delete configuration
       junipernetworks.junos.junos_command:
         commands:
-          - configure
           - delete system
           - delete interfaces
           - delete security
@@ -24,10 +23,10 @@
           - delete syslog
           - delete chassis
 
-  tasks:
     - name: Configure device
       junipernetworks.junos.junos_command:
         commands:
+          - configure
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system host-name LAB-MGMT-FW-01
           - set system services ssh protocol-version v2
