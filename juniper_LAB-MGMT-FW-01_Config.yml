@@ -39,6 +39,7 @@
           - delete switch-options
           - delete system
           - delete vlans
+      register: delete_output
 
     - name: Configure device
       junipernetworks.junos.junos_command:
@@ -50,8 +51,11 @@
           - set interfaces ge-0/0/0 unit 0 family inet address 192.168.1.248/24
           - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
           - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+      timeout: 60
+      when: delete_output is success
 
     - name: Commit configuration
       junipernetworks.junos.junos_command:
         commands:
           - commit
+      when: delete_output is success
