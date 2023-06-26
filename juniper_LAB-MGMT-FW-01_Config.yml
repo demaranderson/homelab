@@ -8,12 +8,7 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Send delete and yes commands
-      ansible.builtin.raw: |
-        delete
-        yes
-      register: command_output
-      delegate_to: LAB-MGMT-FW-01
-
-    - debug:
-        var: command_output.stdout_lines
+    - name: Backup device configuration
+      junipernetworks.junos.junos_config:
+        backup: true
+      register: config_result
