@@ -8,9 +8,11 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Zero out the current configuration
-      junipernetworks.junos.junos_config:
-        zeroize: true
+    - name: Zeroize the device configuration
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+          - run request system zeroize
 
     - name: Configure device
       junipernetworks.junos.junos_command:
