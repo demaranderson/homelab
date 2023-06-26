@@ -9,6 +9,11 @@
 
   tasks:
     - name: Send delete and yes commands
-      ansible.builtin.send:
-        newline: "delete\nyes\n"
+      ansible.builtin.raw: |
+        delete
+        yes
+      register: command_output
       delegate_to: LAB-MGMT-FW-01
+
+    - debug:
+        var: command_output.stdout_lines
