@@ -8,8 +8,8 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Delete configuration
-      junipernetworks.junos.junos_netconf.send_command:
-        command: delete
-        prompt: 'Delete everything under this level\? \[yes,no\] \(no\)'
+    - name: Delete all configuration
+      junipernetworks.junos.junos_config:
+        state: absent
+        zeroize: yes
         answer: yes
