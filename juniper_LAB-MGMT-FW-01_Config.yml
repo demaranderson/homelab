@@ -8,8 +8,15 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Delete all configuration
-      junipernetworks.junos.junos_config:
-        state: absent
-        zeroize: yes
-        answer: yes
+    - name: Delete configuration and Configure device
+      junipernetworks.junos.junos_command:
+        commands:
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          - set system host-name LAB-MGMT-FW-01
+          - set system services ssh protocol-version v2
+          - set system services netconf ssh
+		      - set system time-zone America/New_York
+          - set interfaces ge-0/0/0 unit 0 family inet address 192.168.1.248/24
+          - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ssh
+          - set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+          - commit
