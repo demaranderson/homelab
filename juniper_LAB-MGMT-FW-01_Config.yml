@@ -9,7 +9,7 @@
 
   tasks:
     - name: Delete configuration
-      expect:
+      junipernetworks.junos.junos_netconf.send_command:
         command: delete
-        responses:
-          'Delete everything under this level\? \[yes,no\] \(no\)': 'yes'
+        prompt: 'Delete everything under this level\? \[yes,no\] \(no\)'
+        answer: yes
