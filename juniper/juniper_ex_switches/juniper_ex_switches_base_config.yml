@@ -1,4 +1,3 @@
----
 - name: Configure Juniper EX Switches
   hosts: juniper_ex_switches
   gather_facts: no
@@ -8,13 +7,38 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Set Juniper EX Switches Base Config
+    - name: Configure, Delete, Set, and Commit Juniper EX Switches Config
       junipernetworks.junos.junos_command:
         commands:
           - configure
-          - set system host-name {{ inventory_hostname }}
+          - delete access
+          - delete access-profile
+          - delete accounting-options
+          - delete apply-groups
+          - delete chassis
+          - delete class-of-service
+          - delete ethernet-switching-options
+          - delete event-options
+          - delete firewall
+          - delete forwarding-options
+          - delete groups
+          - delete interfaces
+          - delete multi-chassis
+          - delete poe
+          - delete policy-options
+          - delete protocols
+          - delete redundant-power-system
+          - delete routing-instances
+          - delete routing-options
+          - delete security
+          - delete services
+          - delete snmp
+          - delete system
+          - delete virtual-chassis
+          - delete vlans
           - set poe interface all
           - set protocols lldp interface all
           - set protocols lldp-med interface all
           - set interfaces me0 unit 0 family inet address {{ inventory_hostname_ip }}
+          - set system host-name {{ inventory_hostname }}
           - commit
