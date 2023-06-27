@@ -9,7 +9,7 @@
 
   tasks:
     - name: Gather facts from SRX devices
-      junos_facts:
+      junipernetworks.junos.junos_facts:
         host: "{{ inventory_hostname }}"
 
     - name: Print facts
