@@ -8,20 +8,12 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Enter Configuration Mode
+    - name: Configure Juniper
       junipernetworks.junos.junos_command:
         commands:
-          - configure
-
-    - name: Juniper Base Config
-      junipernetworks.junos.junos_command:
-        commands:
-          - set system time-zone America/New_York
-          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-          - set system services netconf ssh
-          - set system services ssh protocol-version v2
-
-    - name: Commit Config Changes
-      junipernetworks.junos.junos_command:
-        commands:
-          - commit
+          configure
+          set system time-zone America/New_York
+          set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          set system services netconf ssh
+          set system services ssh protocol-version v2
+          commit
