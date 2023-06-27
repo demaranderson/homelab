@@ -1,9 +1,14 @@
 ---
 - name: Gather Juniper device info
   hosts: juniper_devices
-  gather_facts: yes
+  gather_facts: no
 
   tasks:
+    - name: Collect default set of Juniper facts
+      junipernetworks.junos.junos_facts:
+        gather_subset: default
+      register: juniper_facts
+
     - name: Print Juniper device info
       debug:
-        var: ansible_facts
+        var: juniper_facts
