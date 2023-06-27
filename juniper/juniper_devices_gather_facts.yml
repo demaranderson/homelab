@@ -1,8 +1,9 @@
 ---
 - name: Configure Juniper Devices
   hosts: juniper_devices
-  gather_facts: yes
+  gather_facts: no
   connection: network_cli
 
-  vars:
-    ansible_network_os: junos
+  tasks:
+    - name: collect default set of facts
+      junipernetworks.junos.junos_facts:
