@@ -10,7 +10,7 @@
   tasks:
     - name: Copy configuration file to device
       copy:
-        src: /tmp/juniper_empty_config.conf  # Specify the source configuration file path
+        src: juniper_empty_config.conf  # Specify the source configuration file path
         dest: /var/tmp/juniper_empty_config.conf  # Specify the destination path on the Juniper device
         mode: 0644
 
