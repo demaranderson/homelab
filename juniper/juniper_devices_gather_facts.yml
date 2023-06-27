@@ -8,12 +8,12 @@
     ansible_network_os: junos
 
   tasks:
-  - name: Check device type
-    junos_version:
-      host: "{{ inventory_hostname }}"
-      gather_facts: no
-    register: junos_version
+    - name: Check device type
+      junipernetworks.junos.junos_version:
+        host: "{{ inventory_hostname }}"
+        gather_facts: no
+      register: junos_version
 
-  - name: Print device type
-    debug:
-      var: junos_version.device_type
+    - name: Print device type
+      debug:
+        var: junos_version.device_type
