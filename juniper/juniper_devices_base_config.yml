@@ -1,5 +1,5 @@
 ---
-- name: Check Juniper Model and Hostname
+- name: Set Juniper Switches, Routers and Firewalls Base Config
   hosts: juniper_devices
   gather_facts: no
   connection: network_cli
