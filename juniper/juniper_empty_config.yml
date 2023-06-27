@@ -3,6 +3,10 @@
   hosts: LAB-SW-EX2200
   gather_facts: false
   connection: network_cli
+
+  vars:
+    ansible_network_os: junos
+    
   tasks:
     - name: Copy configuration file to device
       copy:
