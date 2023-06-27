@@ -16,5 +16,4 @@
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services netconf ssh
           - set system services ssh protocol-version v2
-          - set system host-name "{{ inventory_hostname }}"
           - commit
