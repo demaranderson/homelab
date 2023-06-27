@@ -1,0 +1,20 @@
+---
+- name: Configure Juniper EX Switches
+  hosts: juniper_ex_switches
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: junos
+
+  tasks:
+    - name: Set Juniper EX Switches Base Config
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+          - set system host-name {{ inventory_hostname }}
+          - set poe interface all
+          - set protocols lldp interface all
+          - set protocols lldp-med interface all
+          - set interfaces me0 unit 0 family inet address {{ inventory_hostname_ip }}
+          - commit
