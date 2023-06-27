@@ -2,6 +2,7 @@
 - name: Gather Juniper device info
   hosts: juniper_devices
   gather_facts: no
+  connection: network_cli
 
   tasks:
     - name: Collect default set of Juniper facts
