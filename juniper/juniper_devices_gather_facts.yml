@@ -1,10 +1,14 @@
----
 - name: Gather Juniper device info
   hosts: juniper_devices
   gather_facts: no
   connection: network_cli
 
   tasks:
+    - name: Configure ansible_network_os for Juniper devices
+      set_fact:
+        ansible_network_os: junos
+      when: inventory_hostname in groups['juniper_devices']
+
     - name: Collect default set of Juniper facts
       junipernetworks.junos.junos_facts:
         gather_subset: default
