@@ -1,0 +1,62 @@
+---
+- name: Check and fix repository stream on CentOS 8
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Check if OS is CentOS 8
+      block:
+        - assert:
+            that:
+              - ansible_distribution == 'CentOS'
+              - ansible_distribution_major_version == '8'
+          become: false
+          tags:
+            - check_os
+
+    - name: Fix repository stream
+      block:
+        - name: Clean DNF cache
+          shell: dnf -y clean all
+          become: true
+          tags:
+            - fix_repo_stream
+
+        - name: Remove DNF cache directory
+          file:
+            path: /var/cache/dnf
+            state: absent
+            recurse: yes
+          become: true
+          tags:
+            - fix_repo_stream
+
+        - name: Update repository configuration
+          blockinfile:
+            dest: /etc/yum.repos.d/CentOS-Base.repo
+            insertbefore: '^baseurl=http://mirror.centos.org'
+            block: |
+              baseurl=http://vault.centos.org
+              #mirrorlist=
+          become: true
+          tags:
+            - fix_repo_stream
+
+        - name: Swap repositories to CentOS Stream
+          shell: dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+          become: true
+          tags:
+            - fix_repo_stream
+
+        - name: Perform system upgrade
+          shell: dnf -y distro-sync
+          become: true
+          tags:
+            - fix_repo_stream
+
+        - name: Update system packages
+          shell: dnf -y update
+          become: true
+          tags:
+            - fix_repo_stream
+
+      when: "'check_os' in tags and 'failed' not in ansible_play_hosts_all"
