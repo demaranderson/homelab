@@ -1,0 +1,17 @@
+---
+- name: Juniper Load Replace
+  hosts: LAB-SW-EX2200
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: Copy configuration file to device
+      copy:
+        src: juniper_empty_config.conf  # Specify the source configuration file path
+        dest: /var/tmp/juniper_empty_config.conf  # Specify the destination path on the Juniper device
+        mode: 0644
+
+    - name: Configure Juniper
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+          - load replace /var/tmp/juniper_empty_config.conf
