@@ -1,0 +1,22 @@
+---
+- name: Check Juniper Model and Hostname
+  hosts: juniper_devices
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: junos
+
+  tasks:
+    - name: Juniper Base Config
+      junipernetworks.junos.junos_command:
+        commands:
+          - set system time-zone America/New_York
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          - set system services netconf ssh
+          - set system services ssh protocol-version v2
+
+    - name: Commit Config Changes
+      junipernetworks.junos.junos_command:
+        commands:
+          - commit
