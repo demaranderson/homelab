@@ -1,0 +1,9 @@
+---
+- name: Gather Juniper device info
+  hosts: juniper_devices
+  gather_facts: yes
+
+  tasks:
+    - name: Print Juniper device info
+      debug:
+        var: ansible_facts
