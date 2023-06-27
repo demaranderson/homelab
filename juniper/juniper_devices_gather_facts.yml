@@ -8,10 +8,7 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Gather facts from SRX devices
+    - name: Gather legacy and resource facts
       junipernetworks.junos.junos_facts:
-        host: "{{ inventory_hostname }}"
-
-    - name: Print facts
-      debug:
-        var: facts
+        gather_subset: all
+        gather_network_resources: all
