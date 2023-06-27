@@ -8,6 +8,11 @@
     ansible_network_os: junos
 
   tasks:
+    - name: Enter Configuration Mode
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+
     - name: Juniper Base Config
       junipernetworks.junos.junos_command:
         commands:
