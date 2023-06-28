@@ -41,3 +41,14 @@
           - set protocols lldp-med interface all
           - set interfaces me0 unit 0 family inet address {{ ansible_host }}/24
           - set system host-name {{ inventory_hostname }}
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          - set system services netconf ssh
+          - set system services ssh protocol-version v2
+          - commit and-quit
+
+    - name: Configure NTP server
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+          - set system ntp server 8.8.8.8
+          - commit
