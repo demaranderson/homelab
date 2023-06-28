@@ -7,7 +7,7 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Configure, Delete, Set, and Commit Juniper EX Switches Config
+    - name: Delete Juniper EX Switches Config
       junipernetworks.junos.junos_command:
         commands:
           - configure
@@ -36,6 +36,11 @@
           - delete system
           - delete virtual-chassis
           - delete vlans
+
+    - name: Configure Juniper EX Switches
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
           - set poe interface all
           - set protocols lldp interface all
           - set protocols lldp-med interface all
