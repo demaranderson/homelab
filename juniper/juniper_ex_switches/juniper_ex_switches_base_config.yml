@@ -41,4 +41,3 @@
           - set protocols lldp-med interface all
           - set interfaces me0 unit 0 family inet address {{ inventory_hostname_ip }}
           - set system host-name {{ inventory_hostname }}
-          - commit
