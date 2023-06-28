@@ -36,7 +36,8 @@
           - delete system
           - delete virtual-chassis
           - delete vlans
-        timeout: 60
+      async: 60
+      poll: 0
 
     - name: Configure Juniper EX Switches
       junipernetworks.junos.junos_command:
@@ -47,4 +48,5 @@
           - set protocols lldp-med interface all
           - set interfaces me0 unit 0 family inet address {{ ansible_host }}/24
           - set system host-name {{ inventory_hostname }}
-        timeout: 60
+      async: 60
+      poll: 0
