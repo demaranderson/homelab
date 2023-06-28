@@ -5,6 +5,8 @@
 
   vars:
     ansible_network_os: junos
+    ansible_network_cli_timeout: 60
+    
 
   tasks:
     - name: Delete Juniper EX Switches Config
