@@ -6,7 +6,6 @@
   vars:
     ansible_network_os: junos
     ansible_network_cli_timeout: 60
-    
 
   tasks:
     - name: Delete Juniper EX Switches Config
@@ -38,6 +37,11 @@
           - delete system
           - delete virtual-chassis
           - delete vlans
+
+    - name: Set Juniper EX Switches Config
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
           - set poe interface all
           - set protocols lldp interface all
           - set protocols lldp-med interface all
@@ -46,11 +50,4 @@
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services netconf ssh
           - set system services ssh protocol-version v2
-          - commit and-quit
-
-    - name: Configure NTP server
-      junipernetworks.junos.junos_command:
-        commands:
-          - configure
-          - set system ntp server 8.8.8.8
           - commit
