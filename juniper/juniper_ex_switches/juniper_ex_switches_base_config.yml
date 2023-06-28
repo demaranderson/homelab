@@ -10,34 +10,34 @@
     - name: Configure, Delete, Set, and Commit Juniper EX Switches Config
       junipernetworks.junos.junos_command:
         commands:
-          - configure
-          - delete access
-          - delete access-profile
-          - delete accounting-options
-          - delete apply-groups
-          - delete chassis
-          - delete class-of-service
-          - delete ethernet-switching-options
-          - delete event-options
-          - delete firewall
-          - delete forwarding-options
-          - delete groups
-          - delete interfaces
-          - delete multi-chassis
-          - delete poe
-          - delete policy-options
-          - delete protocols
-          - delete redundant-power-system
-          - delete routing-instances
-          - delete routing-options
-          - delete security
-          - delete services
-          - delete snmp
-          - delete system
-          - delete virtual-chassis
-          - delete vlans
-          - set poe interface all
-          - set protocols lldp interface all
-          - set protocols lldp-med interface all
-          - set interfaces me0 unit 0 family inet address {{ hostvars[inventory_hostname]['ansible_host'] }}
-          - set system host-name {{ inventory_hostname }}
+          - command: configure
+          - command: delete access
+          - command: delete access-profile
+          - command: delete accounting-options
+          - command: delete apply-groups
+          - command: delete chassis
+          - command: delete class-of-service
+          - command: delete ethernet-switching-options
+          - command: delete event-options
+          - command: delete firewall
+          - command: delete forwarding-options
+          - command: delete groups
+          - command: delete interfaces
+          - command: delete multi-chassis
+          - command: delete poe
+          - command: delete policy-options
+          - command: delete protocols
+          - command: delete redundant-power-system
+          - command: delete routing-instances
+          - command: delete routing-options
+          - command: delete security
+          - command: delete services
+          - command: delete snmp
+          - command: delete system
+          - command: delete virtual-chassis
+          - command: delete vlans
+          - command: set poe interface all
+          - command: set protocols lldp interface all
+          - command: set protocols lldp-med interface all
+          - command: set interfaces me0 unit 0 family inet address {{ ansible_host.ip_address }}/{{ ansible_host.subnet }}
+          - command: set system host-name {{ inventory_hostname }}
