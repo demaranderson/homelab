@@ -39,5 +39,5 @@
           - command: set poe interface all
           - command: set protocols lldp interface all
           - command: set protocols lldp-med interface all
-          - command: set interfaces me0 unit 0 family inet address {{ inventory_hostname_ip }}
+          - command: set interfaces me0 unit 0 family inet address {{ ansible_host }}
           - command: set system host-name {{ inventory_hostname }}
