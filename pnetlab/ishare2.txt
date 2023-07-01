@@ -1,0 +1,4 @@
+wget -O /usr/sbin/ishare2 https://raw.githubusercontent.com/pnetlabrepo/ishare2/main/ishare2 > /dev/null 2>&1 && chmod +x /usr/sbin/ishare2 && ishare2
+wget -O upgrade.sh https://raw.githubusercontent.com/pnetlabrepo/ishare2/main/upgrades/from_any_to_5.3.11/upgrade.sh > /dev/null 2>&1 && chmod +x upgrade.sh && bash upgrade.sh
+ishare2 pull bin all
+ishare2 pull dynamips all
