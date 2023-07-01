@@ -1,4 +1,17 @@
+
+# Command 1:
+# Description: This command downloads the file ishare2 from the specified URL and saves it as /usr/sbin/ishare2. It then makes the file executable and executes it.
 wget -O /usr/sbin/ishare2 https://raw.githubusercontent.com/pnetlabrepo/ishare2/main/ishare2 > /dev/null 2>&1 && chmod +x /usr/sbin/ishare2 && ishare2
+
+# Command 2:
+# Description: This command downloads the file upgrade.sh from the specified URL. It then makes the file executable and executes it using the bash shell.
 wget -O upgrade.sh https://raw.githubusercontent.com/pnetlabrepo/ishare2/main/upgrades/from_any_to_5.3.11/upgrade.sh > /dev/null 2>&1 && chmod +x upgrade.sh && bash upgrade.sh
+
+# Command 3:
+# Description: This command is specific to the ishare2 application. It performs a "pull" operation on binary files of a certain type. The "all" argument indicates that all items of the specified type should be pulled.
 ishare2 pull bin all
+
+# Command 4:
+# Description: This command is specific to the ishare2 application. It performs a "pull" operation on dynamips-related items. The "all" argument indicates that all available items of the specified type should be pulled.
 ishare2 pull dynamips all
+
