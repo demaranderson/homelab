@@ -1,0 +1,36 @@
+Instructions for Creating a Linux Virtual Machine in EVE-NG using RHEL 9.2 ISO
+
+1. Create a new directory to store the image:
+   mkdir /opt/unetlab/addons/qemu/linux-rhel-9.2/
+
+2. Use an SFTP or SCP client to copy the RHEL 9.2 DVD ISO file into the directory:
+   Source: rhel-9.2-x86_64-dvd.iso
+   Destination: /opt/unetlab/addons/qemu/linux-rhel-9.2/
+
+3. Rename the RHEL 9.2 ISO file to "cdrom.iso":
+   mv /opt/unetlab/addons/qemu/linux-rhel-9.2/rhel-9.2-x86_64-dvd.iso /opt/unetlab/addons/qemu/linux-rhel-9.2/cdrom.iso
+
+4. Navigate to the image directory:
+   cd /opt/unetlab/addons/qemu/linux-rhel-9.2/
+
+5. Create a new virtual hard disk (HDD) called "virtioa.qcow2":
+   /opt/qemu/bin/qemu-img create -f qcow2 virtioa.qcow2 60G
+
+6. Create a new lab and add the "linux-rhel-9.2" node.
+
+7. Connect the node to your home LAN cloud or the internet for updates.
+
+8. Start the node in the lab and proceed with the RHEL 9.2 installation. Customize as needed.
+
+9. After installation, remove the "cdrom.iso" file:
+   rm -f /opt/unetlab/addons/qemu/linux-rhel-9.2/cdrom.iso
+
+10. To set the installed image as the default:
+    - Obtain the lab's UUID from "Lab Details" in the EVE-NG Web-UI.
+    - Find the POD ID and Node ID of the installed node.
+    - Navigate to the installed image directory:
+      cd /opt/unetlab/tmp/0/<UUID>/<Node ID>/
+    - Commit the changes:
+      /opt/qemu/bin/qemu-img commit virtioa.qcow2
+
+Note: Replace "<UUID>" with the lab's UUID and "<Node ID>" with the actual Node ID of the installed RHEL 9.2 node.
