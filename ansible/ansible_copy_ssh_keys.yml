@@ -1,6 +1,6 @@
 ---
 - name: Copy SSH public key to ESXi host
-  hosts: esxi_host
+  hosts: esxi
   gather_facts: no
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
