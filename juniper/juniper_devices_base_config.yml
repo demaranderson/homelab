@@ -12,5 +12,5 @@
     - name: Run delete command
       junipernetworks.junos.junos_command:
         commands:
-          - configure
-          - delete
+        - configure
+        - delete
