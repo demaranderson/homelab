@@ -4,9 +4,9 @@
   become: yes
 
   tasks:
-  - name: Set the authorized ssh keys for the root user
+  - name: Set the authorized SSH keys for the root user
     copy:
-      src: /root/.ssh/id_rsa.pub
+      content: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
       dest: /etc/ssh/keys-root/authorized_keys
       owner: root
       group: root
