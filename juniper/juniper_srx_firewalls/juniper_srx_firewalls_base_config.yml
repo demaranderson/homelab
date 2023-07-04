@@ -1,1 +1,4 @@
-
+set system root-authentication encrypted-password "$6$3LfuuzK4$Cla84fv8IgsqjubthL4aEyaM/7zT.2ASixyhpXLGG9YmohoFfcXO/n91ryi6nWGH9cuuCjmXUDZlZzxX6tGYS/"
+set system services ssh root-login allow
+set system services ssh protocol-version v2
+set interfaces fxp0 unit 0 family inet address 192.168.1.248/24
