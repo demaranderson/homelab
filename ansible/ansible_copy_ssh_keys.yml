@@ -6,5 +6,5 @@
 
   tasks:
     - name: Copy SSH key to authorized_keys
-      shell: cat ~/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
+      shell: cat root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
       delegate_to: localhost
