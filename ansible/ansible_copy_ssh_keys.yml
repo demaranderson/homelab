@@ -1,6 +1,6 @@
 ---
 - name: Copy SSH public key to ESXi host
-  hosts: esxi_hosts
+  hosts: esxi
   gather_facts: false
   become: true
 
