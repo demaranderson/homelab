@@ -1,6 +1,6 @@
 ---
 - name: Set Juniper Switches, Routers, and Firewalls Base Config
-  hosts: juniper
+  hosts: LAB-SW-EX2200
   gather_facts: no
   connection: network_cli
   
