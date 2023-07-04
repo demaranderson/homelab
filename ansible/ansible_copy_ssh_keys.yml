@@ -4,18 +4,11 @@
   become: yes
 
   tasks:
-    - name: Copy SSH public key to ESXi host
+    - name: Set the authorized SSH keys for the root user
       copy:
         src: files/id_rsa.pub
-        dest: /tmp/id_rsa.pub
+        dest: /etc/ssh/keys-root/authorized_keys
+        owner: root
+        group: root
+        mode: '0600'
 
-    - name: Append public key to authorized keys
-      command: '/bin/echo "$(cat /tmp/id_rsa.pub)" >> /etc/ssh/keys-root/authorized_keys'
-
-    - name: Display authorized keys file
-      command: cat /etc/ssh/keys-root/authorized_keys
-      register: authorized_keys_result
-
-    - name: Display authorized keys
-      debug:
-        var: authorized_keys_result.stdout_lines
