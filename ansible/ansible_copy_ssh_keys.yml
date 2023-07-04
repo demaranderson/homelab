@@ -1,0 +1,16 @@
+---
+- name: Copy SSH keys To All Devices
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Check device type
+      setup:
+      register: device_info
+
+    - name: Copy SSH keys To VMware ESXI Hosts
+      copy:
+        src: /root/.ssh/id_rsa.pub
+        dest: /etc/ssh/keys-root/authorized_keys
+        mode: 0600
+      when: device_info.ansible_facts.ansible_system == "VMware ESXi"
