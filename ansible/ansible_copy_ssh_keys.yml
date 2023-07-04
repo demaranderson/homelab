@@ -1,9 +1,13 @@
 - name: Copy SSH key to ESXi hosts
   hosts: esxi
-  connection: local
   gather_facts: no
-  become: no
+  become: yes
 
   tasks:
-    - name: Copy SSH key to authorized_keys
-      ansible.builtin.shell: cat /root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
+  - name: Set the authorized ssh keys for the root user
+    copy:
+      src: /root/.ssh/id_rsa.pub
+      dest: /etc/ssh/keys-root/authorized_keys
+      owner: root
+      group: root
+      mode: '0600'
