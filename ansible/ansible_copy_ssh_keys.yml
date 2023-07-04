@@ -5,10 +5,14 @@
   become: true
 
   tasks:
-    - name: Copy public key to authorized_keys file
-      lineinfile:
-        path: /etc/ssh/keys-root/authorized_keys
-        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-        state: present
-        create: yes
+    - name: Fetch public key file from control machine
+      fetch:
+        src: /root/.ssh/id_rsa.pub
+        dest: /tmp/id_rsa.pub
+        flat: yes
+
+    - name: Create authorized_keys file
+      template:
+        src: /tmp/id_rsa.pub
+        dest: /etc/ssh/keys-root/authorized_keys
         mode: '0600'
