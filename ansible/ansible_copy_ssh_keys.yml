@@ -5,9 +5,9 @@
 
   tasks:
   - name: Set the authorized SSH keys for the root user
-    shell: |
-      scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys << EOF
-      yes
-      <password>
-      EOF
+    expect:
+      command: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
+      responses:
+        'Are you sure you want to continue connecting (yes/no)?': 'yes\n'
+        'Password:': '<password>\n'
     delegate_to: localhost
