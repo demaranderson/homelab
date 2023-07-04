@@ -4,8 +4,21 @@
   become: yes
 
   tasks:
+  - name: Retrieve updated SSH key
+    command: ssh-keyscan -H {{ ansible_host }}
+    register: ssh_keyscan_output
+    changed_when: false
+    failed_when: false
+    check_mode: false
+
+  - name: Add SSH key to known_hosts
+    lineinfile:
+      line: "{{ ssh_keyscan_output.stdout }}"
+      path: /root/.ssh/known_hosts
+      state: present
+      create: true
+      mode: "0644"
+
   - name: Set the authorized SSH keys for the root user
-    environment:
-      ANSIBLE_HOST_KEY_CHECKING: no
     raw: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
     delegate_to: localhost
