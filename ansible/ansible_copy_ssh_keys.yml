@@ -4,10 +4,19 @@
   become: yes
 
   tasks:
+  - name: Fetch the SSH public key from Ansible Controller
+    fetch:
+      src: /root/.ssh/id_rsa.pub
+      dest: /tmp/id_rsa.pub
+      flat: yes
+      fail_on_missing: yes
+    delegate_to: localhost
+
   - name: Set the authorized SSH keys for the root user
     copy:
-      content: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+      src: /tmp/id_rsa.pub
       dest: /etc/ssh/keys-root/authorized_keys
       owner: root
       group: root
       mode: '0600'
+    delegate_to: "{{ inventory_hostname }}"
