@@ -5,4 +5,4 @@
 
   tasks:
     - name: Copy SSH public key to ESXi host
-      shell: "cat root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'"
+      shell: cat root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
