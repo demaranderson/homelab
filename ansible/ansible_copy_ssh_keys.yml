@@ -5,4 +5,9 @@
 
   tasks:
   - name: Set the authorized SSH keys for the root user
-    shell: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
+    ansible.builtin.copy:
+      src: /root/.ssh/id_rsa.pub
+      dest: /etc/ssh/keys-root/authorized_keys
+      owner: root
+      group: root
+      mode: '0600'
