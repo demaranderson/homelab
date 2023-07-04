@@ -1,16 +1,10 @@
 ---
 - name: Copy SSH keys to ESXi hosts
   hosts: esxi
-  gather_facts: no
-  become: yes
+  gather_facts: yes
+  become: no
 
   tasks:
-    - name: Check device type
-      setup:
-      register: device_info
-
     - name: Copy SSH key to authorized_keys
-      command: cat ~/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
-      environment:
-        SSH_AUTH_SOCK: no
-      when: device_info.ansible_facts.ansible_system == "VMware ESXi"
+      shell: cat ~/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
+      delegate_to: localhost
