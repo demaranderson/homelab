@@ -10,3 +10,7 @@
   tasks:
     - name: collect default set of facts
       junipernetworks.junos.junos_facts:
+
+    - name: display gathered facts
+      debug:
+        var: ansible_net_facts
