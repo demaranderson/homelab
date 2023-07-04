@@ -4,5 +4,10 @@
   become: yes
 
   tasks:
-    - name: Copy SSH public key to ESXi host
-      shell: cat files/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
+    - name: Set the authorized SSH keys for the root user
+      copy:
+        src: files/id_rsa.pub
+        dest: /etc/ssh/keys-root/authorized_keys
+        owner: root
+        group: root
+        mode: '0600'
