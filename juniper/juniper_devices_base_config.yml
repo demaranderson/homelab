@@ -11,11 +11,4 @@
     - name: Run delete command
       junipernetworks.junos.junos_command:
         commands:
-          - command: delete
-            prompt: 'Delete everything under this level? \[yes,no\] \(no\)'
-            answer: 'yes'
-      register: delete_output
-
-    - name: Show delete command output
-      debug:
-        var: delete_output.stdout_lines
+          - delete
