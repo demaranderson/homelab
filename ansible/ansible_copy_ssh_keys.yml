@@ -5,7 +5,7 @@
   tasks:
     - name: Copy SSH public key to remote host
       copy:
-        src: id_rsa.pub
+        src: root/id_rsa.pub
         dest: /etc/ssh/keys-root/authorized_keys+
         mode: '0644'
         owner: root
