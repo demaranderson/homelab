@@ -1,18 +1,22 @@
 ---
 - name: Copy SSH public key to ESXi host
-  hosts: esxi
+  hosts: esxi_hosts
   gather_facts: false
   become: true
 
   tasks:
-    - name: Fetch public key file from control machine
-      fetch:
+    - name: Read SSH public key file
+      slurp:
         src: /root/.ssh/id_rsa.pub
-        dest: /tmp/id_rsa.pub
-        flat: yes
+      register: public_key_file
 
-    - name: Create authorized_keys file
-      template:
-        src: /tmp/id_rsa.pub
+    - name: Create authorized_keys directory
+      file:
+        path: /etc/ssh/keys-root
+        state: directory
+
+    - name: Copy public key contents to authorized_keys file
+      copy:
+        content: "{{ public_key_file.content | b64decode }}"
         dest: /etc/ssh/keys-root/authorized_keys
         mode: '0600'
