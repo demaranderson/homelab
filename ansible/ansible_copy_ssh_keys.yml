@@ -1,9 +1,9 @@
----
-- hosts: esxi
-  become: true
+- name: Copy SSH key to ESXi hosts
+  hosts: esxi
+  connection: local
+  gather_facts: no
+  become: no
+
   tasks:
-    - name: Append SSH public key to authorized_keys
-      lineinfile:
-        path: /etc/ssh/keys-root/authorized_keys
-        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-        create: yes
+    - name: Copy SSH key to authorized_keys
+      ansible.builtin.shell: cat /root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
