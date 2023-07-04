@@ -1,13 +1,9 @@
 ---
-- name: Copy SSH public key to ESXi host
-  hosts: esxi
-  gather_facts: false
+- hosts: esxi
   become: true
-
   tasks:
-    - name: Copy public key contents to authorized_keys file on ESXi host
+    - name: Append SSH public key to authorized_keys
       lineinfile:
-        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
         path: /etc/ssh/keys-root/authorized_keys
+        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
         create: yes
-        mode: '0600'
