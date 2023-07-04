@@ -1,6 +1,6 @@
 ---
 - name: Check Juniper Model and Hostname
-  hosts: juniper_devices
+  hosts: juniper
   gather_facts: no
   connection: network_cli
 
@@ -8,20 +8,5 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Retrieve show version output
-      junipernetworks.junos.junos_command:
-        commands:
-          - show version
-      register: show_version_output
-
-    - name: Extract Juniper model
-      set_fact:
-        juniper_model: "{{ show_version_output.stdout[0] | regex_search('Model: (.+)', '\\1') }}"
-
-    - name: Extract Juniper hostname
-      set_fact:
-        juniper_hostname: "{{ show_version_output.stdout[0] | regex_search('Hostname: (.+)', '\\1') }}"
-
-    - name: Display Juniper model and hostname
-      debug:
-        msg: "Juniper Model: {{ juniper_model }}, Hostname: {{ juniper_hostname }}"
+    - name: collect default set of facts
+      junipernetworks.junos.junos_facts:
