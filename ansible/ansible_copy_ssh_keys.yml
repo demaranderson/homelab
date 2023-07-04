@@ -3,6 +3,8 @@
   connection: local
   gather_facts: no
   become: no
+  vars:
+    ansible_ssh_common_args: '-o UserKnownHostsFile=/dev/null'
 
   tasks:
     - name: Copy SSH key to authorized_keys
