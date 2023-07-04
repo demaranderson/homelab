@@ -15,7 +15,3 @@
           - show configuration
         display: set
       register: config_output
-
-    - name: Display configuration output
-      debug:
-        var: config_output.stdout_lines
