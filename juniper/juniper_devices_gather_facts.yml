@@ -11,3 +11,8 @@
     - name: collect default set of facts and configuration
       junipernetworks.junos.junos_facts:
         gather_subset: config
+      register: juniper_output
+
+    - name: display gathered facts and configuration
+      debug:
+        var: juniper_output
