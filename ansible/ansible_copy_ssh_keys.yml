@@ -6,7 +6,8 @@
 
   tasks:
     - name: Copy public key contents to authorized_keys file on ESXi host
-      copy:
-        content: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-        dest: /etc/ssh/keys-root/authorized_keys
+      lineinfile:
+        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        path: /etc/ssh/keys-root/authorized_keys
+        create: yes
         mode: '0600'
