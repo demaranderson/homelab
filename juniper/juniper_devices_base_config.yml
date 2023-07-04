@@ -13,4 +13,5 @@
       junipernetworks.junos.junos_command:
         commands:
         - configure
-        - delete
+        - set system ntp server 8.8.4.4
+
