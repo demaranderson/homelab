@@ -6,4 +6,4 @@
 
   tasks:
     - name: Copy SSH key to authorized_keys
-      ansible.builtin.shell: yes | ssh -o StrictHostKeyChecking=no root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys' < /root/.ssh/id_rsa.pub
+      ansible.builtin.shell: yes | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys' < /root/.ssh/id_rsa.pub
