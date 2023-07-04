@@ -4,18 +4,6 @@
   become: yes
 
   tasks:
-  - name: Fetch SSH key from Ansible server
-    fetch:
-      src: /root/.ssh/id_rsa.pub
-      dest: /tmp
-      flat: yes
-      fail_on_missing: yes
-    delegate_to: localhost
-
   - name: Set the authorized SSH keys for the root user
-    copy:
-      src: /tmp/id_rsa.pub
-      dest: /etc/ssh/keys-root/authorized_keys
-      owner: root
-      group: root
-      mode: '0600'
+    raw: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
+    delegate_to: localhost
