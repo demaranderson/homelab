@@ -1,17 +1,9 @@
----
-- name: Copy SSH public key to ESXi host
+- name: Copy SSH key to ESXi hosts
   hosts: esxi
+  connection: local
   gather_facts: no
-  vars:
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-  tasks:
-    - name: Fetch public key contents
-      command: cat /root/.ssh/id_rsa.pub
-      register: public_key
+  become: no
 
-    - name: Copy public key to authorized_keys
-      copy:
-        content: "{{ public_key.stdout }}"
-        dest: /etc/ssh/keys-root/authorized_keys
-        mode: '0644'
-        become: true
+  tasks:
+    - name: Copy SSH key to authorized_keys
+      ansible.builtin.shell: cat /root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
