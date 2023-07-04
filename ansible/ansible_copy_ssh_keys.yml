@@ -1,7 +1,7 @@
 ---
 - name: Copy SSH keys to ESXi hosts
   hosts: esxi
-  gather_facts: yes
+  gather_facts: no
   become: no
 
   tasks:
