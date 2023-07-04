@@ -5,5 +5,7 @@
 
   tasks:
   - name: Set the authorized SSH keys for the root user
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: no
     raw: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
     delegate_to: localhost
