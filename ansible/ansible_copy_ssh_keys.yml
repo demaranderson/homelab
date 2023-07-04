@@ -5,18 +5,5 @@
   become: no
 
   tasks:
-    - name: Fetch ESXi host key
-      ansible.builtin.shell: ssh-keyscan -t ecdsa {{ ansible_host }}
-      register: host_key
-      changed_when: false
-
-    - name: Add ESXi host key to known_hosts
-      ansible.builtin.lineinfile:
-        dest: /root/.ssh/known_hosts
-        line: "{{ host_key.stdout }}"
-        create: yes
-        state: present
-      changed_when: false
-
     - name: Copy SSH key to authorized_keys
-      ansible.builtin.shell: cat /root/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
+      ansible.builtin.shell: cat /root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} 'cat >> /etc/ssh/keys-root/authorized_keys'
