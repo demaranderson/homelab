@@ -1,5 +1,4 @@
 - name: Copy SSH key to ESXi hosts
-  hosts: esxi
   connection: local
   gather_facts: no
   become: no
