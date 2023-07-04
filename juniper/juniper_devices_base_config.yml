@@ -1,19 +1,21 @@
 ---
-- name: Set Juniper Switches, Routers and Firewalls Base Config
+- name: Set Juniper Switches, Routers, and Firewalls Base Config
   hosts: juniper
   gather_facts: no
   connection: network_cli
-
+  
   vars:
     ansible_network_os: junos
 
   tasks:
-    - name: Configure Juniper
+    - name: Run delete command
       junipernetworks.junos.junos_command:
         commands:
-          - configure
-          - set system time-zone America/New_York
-          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-          - set system services netconf ssh
-          - set system services ssh protocol-version v2
-          - commit
+          - command: delete
+            prompt: 'Delete everything under this level? \[yes,no\] \(no\)'
+            answer: 'yes'
+      register: delete_output
+
+    - name: Show delete command output
+      debug:
+        var: delete_output.stdout_lines
