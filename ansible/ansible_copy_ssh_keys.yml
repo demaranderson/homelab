@@ -1,13 +1,27 @@
-- name: Copy SSH key to ESXi hosts
+- name: Copy SSH public key and handle key fingerprint
   hosts: esxi
-  gather_facts: no
-  become: yes
-
+  become: true
+  
   tasks:
-  - name: Set the authorized SSH keys for the root user
-    expect:
-      command: scp /root/.ssh/id_rsa.pub root@{{ ansible_host }}:/etc/ssh/keys-root/authorized_keys
-      responses:
-        'Are you sure you want to continue connecting (yes/no)?': 'yes\n'
-        'Password:': '<password>\n'
-    delegate_to: localhost
+    - name: Copy SSH public key to remote host
+      copy:
+        src: /root/.ssh/id_rsa.pub
+        dest: /etc/ssh/keys-root/authorized_keys+
+        mode: '0644'
+        owner: root
+        group: root
+    
+    - name: Retrieve key fingerprint for first time connection
+      shell: ssh-keyscan -t rsa localhost
+      register: ssh_fingerprint
+      changed_when: false
+    
+    - name: Add key fingerprint to known_hosts file
+      lineinfile:
+        path: /root/.ssh/known_hosts
+        line: "{{ ssh_fingerprint.stdout }}"
+        create: yes
+        mode: '0644'
+        owner: root
+        group: root
+      when: ssh_fingerprint.stdout is defined
