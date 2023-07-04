@@ -5,10 +5,8 @@
   become: true
 
   tasks:
-    - name: Read SSH public key file on control machine
-      slurp:
-        src: /root/.ssh/id_rsa.pub
-      register: public_key_file
-
     - name: Copy public key contents to authorized_keys file on ESXi host
-      shell: echo "{{ public_key_file.content | b64decode }}" >> /etc/ssh/keys-root/authorized_keys
+      copy:
+        content: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        dest: /etc/ssh/keys-root/authorized_keys
+        mode: '0600'
