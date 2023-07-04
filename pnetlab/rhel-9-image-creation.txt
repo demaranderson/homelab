@@ -14,7 +14,7 @@ Instructions for Creating a Linux Virtual Machine in EVE-NG using RHEL 9.2 ISO
    cd /opt/unetlab/addons/qemu/linux-rhel-9.2/
 
 5. Create a new virtual hard disk (HDD) called "virtioa.qcow2":
-   /opt/qemu/bin/qemu-img create -f qcow2 virtioa.qcow2 60G
+   /opt/qemu/bin/qemu-img create -f qcow2 virtioa.qcow2 30G
 
 6. Create a new lab and add the "linux-rhel-9.2" node.
 
