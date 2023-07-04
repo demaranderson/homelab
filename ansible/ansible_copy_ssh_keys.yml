@@ -1,6 +1,5 @@
 - name: Copy SSH key to ESXi hosts
   hosts: esxi
-  connection: local
   gather_facts: no
   become: no
   vars:
@@ -8,5 +7,5 @@
 
   tasks:
     - name: Copy SSH key to authorized_keys
-      ansible.builtin.command:
-        cmd: 'cat /root/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=accept-new root@{{ ansible_host }} "cat >> /etc/ssh/keys-root/authorized_keys"'
+      ansible.builtin.shell:
+        cmd: 'cat /root/.ssh/id_rsa.pub | ssh root@{{ ansible_host }} -o "StrictHostKeyChecking=accept-new" "cat >> /etc/ssh/keys-root/authorized_keys"'
