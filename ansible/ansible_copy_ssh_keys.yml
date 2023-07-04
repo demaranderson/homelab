@@ -5,18 +5,10 @@
   become: true
 
   tasks:
-    - name: Read SSH public key file
-      slurp:
-        src: /root/.ssh/id_rsa.pub
-      register: public_key_file
-
-    - name: Create authorized_keys directory
-      file:
-        path: /etc/ssh/keys-root
-        state: directory
-
     - name: Copy public key to authorized_keys file
-      copy:
-        content: "{{ public_key_file.content | b64decode }}"
-        dest: /etc/ssh/keys-root/authorized_keys
+      lineinfile:
+        path: /etc/ssh/keys-root/authorized_keys
+        line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        state: present
+        create: yes
         mode: '0600'
