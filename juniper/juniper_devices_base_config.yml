@@ -1,17 +1,15 @@
 ---
 - name: Show Juniper Switches, Routers, and Firewalls Configuration
-  hosts: LAB-SW-EX2200
+  hosts: juniper
   gather_facts: no
-  connection: network_cli
+  connection: netconf
 
   vars:
     ansible_network_os: junos
-    ansible_network_cli_timeout: 60
 
   tasks:
-    - name: Show configuration in set format
-      junipernetworks.junos.junos_command:
-        commands:
-          - show configuration
-        display: set
-      register: config_output
+    - name: collect default set of facts and configuration
+      junipernetworks.junos.junos_hostname:
+        config:
+          hostname:
+      state: replaced
