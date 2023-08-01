@@ -21,7 +21,6 @@
         - set system services ssh root-login allow
         - set system services ssh protocol-version v2
         - set system services netconf ssh
-        state: present
 
     - name: configure name servers
       junipernetworks.junos.junos_system:
