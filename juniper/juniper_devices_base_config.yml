@@ -8,7 +8,7 @@
     ansible_network_os: junos
 
   tasks:
-    - name: collect default set of facts and configuration
+    - name: Set hostname for devices
       junipernetworks.junos.junos_hostname:
         config:
           hostname: "{{ inventory_hostname }}"
