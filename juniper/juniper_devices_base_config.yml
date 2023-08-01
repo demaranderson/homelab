@@ -11,5 +11,5 @@
     - name: collect default set of facts and configuration
       junipernetworks.junos.junos_hostname:
         config:
-          hostname: {{ inventory_hostname }}
+          hostname: "{{ inventory_hostname }}"
       state: replaced
