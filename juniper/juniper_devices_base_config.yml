@@ -14,7 +14,7 @@
           hostname: "{{ inventory_hostname }}"
         state: replaced
         
-    - name: Set hostname for devices
+    - name: Set password and ssh
       junipernetworks.junos.junos_config:
         lines:
         - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
