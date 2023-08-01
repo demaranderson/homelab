@@ -12,6 +12,9 @@
     - name: remove system configuration
       junipernetworks.junos.junos_system:
         state: absent
+        name_servers:
+          - 8.8.8.8
+          - 8.8.4.4
     
     - name: Set hostname for devices
       junipernetworks.junos.junos_hostname:
