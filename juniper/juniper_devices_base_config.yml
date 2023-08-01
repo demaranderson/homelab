@@ -13,3 +13,9 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
+
+    - name: configure name servers
+      junipernetworks.junos.junos_system:
+        name_servers:
+        - 8.8.8.8
+        - 8.8.4.4
