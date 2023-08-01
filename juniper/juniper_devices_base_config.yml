@@ -9,27 +9,21 @@
 
   tasks:
 
-    - name: remove system configuration
-      junipernetworks.junos.junos_system:
-        state: absent
-        name_servers:
-          - 8.8.8.8
-          - 8.8.4.4
-    
+    - name: Set password and ssh
+      junipernetworks.junos.junos_config:
+        lines:
+        - delete system
+        - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+        - set system services ssh root-login allow
+        - set system services ssh protocol-version v2
+        - set system services netconf ssh
+
     - name: Set hostname for devices
       junipernetworks.junos.junos_hostname:
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
         
-    - name: Set password and ssh
-      junipernetworks.junos.junos_config:
-        lines:
-        - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-        - set system services ssh root-login allow
-        - set system services ssh protocol-version v2
-        - set system services netconf ssh
-
     - name: configure name servers
       junipernetworks.junos.junos_system:
         name_servers:
