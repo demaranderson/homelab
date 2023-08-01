@@ -8,6 +8,11 @@
     ansible_network_os: junos
 
   tasks:
+
+    - name: remove system configuration
+      junipernetworks.junos.junos_system:
+        state: absent
+    
     - name: Set hostname for devices
       junipernetworks.junos.junos_hostname:
         config:
