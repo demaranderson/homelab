@@ -1,5 +1,5 @@
 ---
-- name: Show Juniper Switches, Routers, and Firewalls Configuration
+- name: Juniper Switches, Routers, and Firewalls Base Configuration
   hosts: juniper
   gather_facts: no
   connection: netconf
