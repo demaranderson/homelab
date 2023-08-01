@@ -18,6 +18,10 @@
       junipernetworks.junos.junos_config:
         lines:
         - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+        - set system services ssh root-login allow
+        - set system services ssh protocol-version v2
+        - set system services netconf ssh
+        state: present
 
     - name: configure name servers
       junipernetworks.junos.junos_system:
