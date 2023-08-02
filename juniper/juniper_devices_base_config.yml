@@ -8,7 +8,6 @@
     ansible_network_os: junos
 
   tasks:
-
     - name: Set password and ssh
       junipernetworks.junos.junos_config:
         lines:
@@ -18,6 +17,7 @@
         - set system services ssh root-login allow
         - set system services ssh protocol-version v2
         - set system services netconf ssh
+        - set interfaces {{ inventory_hostname }} unit 0 family inet address 192.168.2.254/24
         
     - name: configure name servers
       junipernetworks.junos.junos_system:
