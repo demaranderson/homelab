@@ -6,6 +6,8 @@
 
   vars:
     ansible_network_os: junos
+    mgmt_interface: me0
+    test_interface: ge-0/0/0
 
   tasks:
     - name: Set password and ssh
