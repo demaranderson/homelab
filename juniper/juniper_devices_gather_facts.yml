@@ -10,7 +10,7 @@
   tasks:
     - name: collect default set of facts and configuration
       junipernetworks.junos.junos_facts:
-        register: juniper_output
+      register: juniper_output
 
     - name: display gathered facts and configuration
       debug:
