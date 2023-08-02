@@ -14,15 +14,10 @@
         lines:
         - delete system
         - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+        - set system host-name {{ inventory_hostname }}
         - set system services ssh root-login allow
         - set system services ssh protocol-version v2
         - set system services netconf ssh
-
-    - name: Set hostname for devices
-      junipernetworks.junos.junos_hostname:
-        config:
-          hostname: "{{ inventory_hostname }}"
-        state: replaced
         
     - name: configure name servers
       junipernetworks.junos.junos_system:
