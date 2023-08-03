@@ -16,20 +16,4 @@
 
     - name: display gathered facts and configuration
       debug:
-        var: juniper_output---
-- name: Get Juniper System Model
-  hosts: juniper
-  gather_facts: no
-  connection: netconf
-
-  vars:
-    ansible_network_os: junos
-
-  tasks:
-    - name: collect default set of facts and configuration
-      junipernetworks.junos.junos_facts:
-      register: juniper_output
-
-    - name: Display Juniper System Model
-      debug:
-        var: juniper_output.ansible_net_model
+        var: juniper_output
