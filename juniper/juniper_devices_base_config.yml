@@ -13,10 +13,10 @@
           set interfaces em0 unit 0 family inet address {{ ansible_host }}/24
       - model: vSRX
         config_lines: |
-          set interfaces ge-0/0/5 unit 0 family inet address 192.168.6.6/24
+          set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
       - model: ex2200
         config_lines: |
-          set interfaces ge-0/0/5 unit 0 family inet address 192.168.5.5/24
+          set interfaces vme unit 0 family inet address {{ ansible_host }}/24
 
   tasks:
     - name: collect default set of facts and configuration
