@@ -38,13 +38,10 @@
           - set system services ssh protocol-version v2
           - set system services netconf ssh
         
-    - name: Delete all interfaces
-      junipernetworks.junos.junos_config:
-        lines: "delete interfaces"
-
-    - name: Configure management interface based on model
+    - name: Configure management interface and delete all interfaces
       junipernetworks.junos.junos_config:
         lines: |
+          delete interfaces
           {% for intf in interface_configs %}
           {% if juniper_output.ansible_facts.ansible_net_model in intf.models %}
           {{ intf.config_lines }}
