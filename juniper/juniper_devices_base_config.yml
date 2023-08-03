@@ -55,6 +55,6 @@
 
     - name: Delete all interfaces except vme and fxp0
       junipernetworks.junos.junos_config:
-        lines: "{{ item }}"
+        lines: "delete interfaces {{ item }}"
       loop: "{{ interface_output.stdout_lines }}"
       when: "item.startswith('set interfaces') and 'vme' not in item and 'fxp0' not in item"
