@@ -37,12 +37,12 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
-        
-    - name: Configure management interface and delete all interfaces except vme and fxp0
+
+    - name: Configure management interface
       junipernetworks.junos.junos_config:
         lines: |
-          {% for intf in juniper_output.ansible_facts.ansible_interfaces %}
-          {% if intf != "vme" and intf != "fxp0" %}
-          delete interfaces {{ intf }}
+          {% for intf_config in interface_configs %}
+          {% if juniper_output.ansible_facts.ansible_net_model in intf_config.models %}
+          {{ intf_config.config_lines }}
           {% endif %}
           {% endfor %}
