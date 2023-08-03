@@ -46,3 +46,12 @@
           {{ intf_config.config_lines }}
           {% endif %}
           {% endfor %}
+
+    - name: Delete all interfaces except vme and fxp0
+      junipernetworks.junos.junos_config:
+        lines: |
+          {% for intf in juniper_output.stdout_lines[0] | json_query('interfaces | keys(@)') %}
+          {% if intf != "vme" and intf != "fxp0" %}
+          delete interfaces {{ intf }}
+          {% endif %}
+          {% endfor %}
