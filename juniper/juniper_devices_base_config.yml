@@ -6,24 +6,42 @@
 
   vars:
     ansible_network_os: junos
-    mgmt_interface: me0
-    test_interface: ge-0/0/0
+    
+    interface_configs:
+      - model: vqfx
+        config_lines: |
+          set interfaces em0 unit 0 family inet address {{ ansible_host }}/24
+      - model: vSRX
+        config_lines: |
+          set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
+      - model: ex2200
+        config_lines: |
+          set interfaces me0 unit 0 family inet address {{ ansible_host }}/24
 
   tasks:
+    - name: collect default set of facts and configuration
+      junipernetworks.junos.junos_facts:
+      register: juniper_output
+
+    - name: Display Juniper System Model
+      debug:
+        var: juniper_output.ansible_facts.ansible_net_model
+
     - name: Set password and ssh
       junipernetworks.junos.junos_config:
         lines:
-        - delete system
-        - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-        - set system host-name {{ inventory_hostname }}
-        - set system services ssh root-login allow
-        - set system services ssh protocol-version v2
-        - set system services netconf ssh
-        - set interfaces {{ test_interface }} unit 0 family inet address 192.168.2.254/24
+          - delete system
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          - set system host-name {{ inventory_hostname }}
+          - set system services ssh root-login allow
+          - set system services ssh protocol-version v2
+          - set system services netconf ssh
         
-    - name: configure name servers
-      junipernetworks.junos.junos_system:
-        name_servers:
-        - 8.8.8.8
-        - 8.8.4.4
-        state: present
+    - name: Configure management interface based on model
+      junipernetworks.junos.junos_config:
+        lines: |
+          {% for intf in interface_configs %}
+          {% if juniper_output.ansible_facts.ansible_net_model is search('^' + intf.model) %}
+          {{ intf.config_lines }}
+          {% endif %}
+          {% endfor %}
