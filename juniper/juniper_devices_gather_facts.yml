@@ -12,6 +12,6 @@
       junipernetworks.junos.junos_facts:
       register: juniper_output
 
-    - name: display gathered facts and configuration
+    - name: Display Juniper System Model
       debug:
-        var: juniper_output
+        var: juniper_output.ansible_facts.ansible_net_model
