@@ -50,7 +50,7 @@
     - name: Get list of all interfaces
       junipernetworks.junos.junos_command:
         commands:
-          - run show configuration interfaces
+          - show configuration
         display: set
       register: interface_output
 
