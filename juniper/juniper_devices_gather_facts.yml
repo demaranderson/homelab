@@ -1,4 +1,22 @@
 ---
+- name: Check Juniper Model and Hostname
+  hosts: juniper
+  gather_facts: no
+  connection: netconf
+
+  vars:
+    ansible_network_os: junos
+
+  tasks:
+    - name: collect default set of facts and configuration
+      junipernetworks.junos.junos_facts:
+        gather_subset: config
+        config_format: xml
+      register: juniper_output
+
+    - name: display gathered facts and configuration
+      debug:
+        var: juniper_output---
 - name: Get Juniper System Model
   hosts: juniper
   gather_facts: no
