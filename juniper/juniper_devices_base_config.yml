@@ -50,8 +50,9 @@
     - name: Delete all interfaces except vme and fxp0
       junipernetworks.junos.junos_config:
         lines: |
-          {% for intf in juniper_output.stdout_lines[0] | json_query('interfaces | keys(@)') %}
+          {% for intf in juniper_output.ansible_facts.ansible_interfaces %}
           {% if intf != "vme" and intf != "fxp0" %}
           delete interfaces {{ intf }}
           {% endif %}
           {% endfor %}
+
