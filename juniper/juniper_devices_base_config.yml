@@ -50,7 +50,7 @@
     - name: Get list of all interfaces
       junipernetworks.junos.junos_command:
         commands:
-          - show interfaces | display set
+          - show interfaces
       register: interface_output
 
     - name: Delete all interfaces except vme and fxp0
