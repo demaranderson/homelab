@@ -9,7 +9,6 @@
     
     interface_configs:
       - models: 
-          - vSRX
           - ex2200-c-12t-2g
           - vqfx
         config_lines: |
