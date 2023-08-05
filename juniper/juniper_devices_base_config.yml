@@ -13,6 +13,7 @@
           - vqfx
         config_lines: |
           delete interfaces
+          set protocols lldp interface all
           set interfaces vme unit 0 family inet address {{ ansible_host }}/24
       - models:
           - vSRX
