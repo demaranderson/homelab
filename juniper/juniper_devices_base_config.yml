@@ -47,15 +47,3 @@
           {% endif %}
           {% endfor %}
 
-    - name: Get list of all interfaces
-      junipernetworks.junos.junos_command:
-        commands:
-          - show configuration
-        display: set
-      register: interface_output
-
-    - name: Delete all interfaces except vme and fxp0
-      junipernetworks.junos.junos_config:
-        lines: "{{ item }}"
-      loop: "{{ interface_output.stdout_lines }}"
-      when: "item is match('^set interfaces') and 'vme' not in item and 'fxp0' not in item"
