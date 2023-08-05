@@ -21,7 +21,7 @@
 
   tasks:
     - name: Collect default facts and configuration
-      junipernetworks.junos.junos_facts
+      junipernetworks.junos.junos_facts:
       register: juniper_output
 
     - name: Display Juniper System Model
