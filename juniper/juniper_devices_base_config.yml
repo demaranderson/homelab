@@ -14,10 +14,11 @@
         config_lines: |
           delete interfaces
           set interfaces vme unit 0 family inet address {{ ansible_host }}/24
+
       - models:
           - vSRX
           - MX
-        config_lines: |
+        config_lines_vSRX: |
           delete interfaces
           set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           set protocols lldp-med interface all
@@ -52,8 +53,5 @@
 
     - name: Configure vSRX management interface
       junipernetworks.junos.junos_config:
-        lines: "{{ item.config_lines }}"
-      loop: "{{ interface_configs }}"
+        lines: "{{ config_lines_vSRX }}"
       when: juniper_output.ansible_facts.ansible_net_model == 'vSRX'
-
-
