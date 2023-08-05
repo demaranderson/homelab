@@ -20,6 +20,7 @@
         config_lines: |
           delete interfaces
           set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
+          set protocols lldp-med interface all
 
   tasks:
     - name: collect default set of facts and configuration
@@ -30,7 +31,7 @@
       debug:
         var: juniper_output.ansible_facts.ansible_net_model
 
-    - name: Set password and ssh
+    - name: Set system config
       junipernetworks.junos.junos_config:
         lines:
           - delete system
