@@ -7,43 +7,13 @@
   vars:
     ansible_network_os: junos
 
-    interface_configs:
-      - models:
-          - ex2200-c-12t-2g
-          - vqfx
-        config_lines: |
-          delete interfaces
-          set protocols lldp interface ge-0/0/1
-          set interfaces vme unit 0 family inet address {{ ansible_host }}/24
-      - models:
-          - vSRX
-          - MX
-        config_lines: |
-          delete interfaces
-          set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
-          set protocols lldp-med interface all
-
   tasks:
-    - name: collect default set of facts and configuration
-      junipernetworks.junos.junos_facts:
-      register: juniper_output
-
-    - name: Display Juniper System Model
-      debug:
-        var: juniper_output.ansible_facts.ansible_net_model
-
     - name: Set system config
       junipernetworks.junos.junos_config:
         lines:
           - delete system
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-          - set system host-name {{ inventory_hostname }}
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
 
-    - name: Apply interface configs based on models
-      junipernetworks.junos.junos_config:
-        lines: "{{ item.config_lines }}"
-      loop: "{{ interface_configs }}"
-      when: juniper_output.ansible_facts.ansible_net_model in item.models
