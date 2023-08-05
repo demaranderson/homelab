@@ -6,19 +6,18 @@
 
   vars:
     ansible_network_os: junos
-    
+
     interface_configs:
-      - models: 
+      - models:
           - ex2200-c-12t-2g
           - vqfx
         config_lines: |
           delete interfaces
           set interfaces vme unit 0 family inet address {{ ansible_host }}/24
-
       - models:
           - vSRX
           - MX
-        config_lines_vSRX: |
+        config_lines: |
           delete interfaces
           set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           set protocols lldp-med interface all
@@ -42,16 +41,8 @@
           - set system services ssh protocol-version v2
           - set system services netconf ssh
 
-    - name: Configure management interface
+    - name: Apply interface configs based on models
       junipernetworks.junos.junos_config:
-        lines: |
-          {% for intf_config in interface_configs %}
-          {% if juniper_output.ansible_facts.ansible_net_model in intf_config.models %}
-          {{ intf_config.config_lines }}
-          {% endif %}
-          {% endfor %}
-
-    - name: Configure vSRX management interface
-      junipernetworks.junos.junos_config:
-        lines: "{{ config_lines_vSRX }}"
-      when: juniper_output.ansible_facts.ansible_net_model == 'vSRX'
+        lines: "{{ item.config_lines }}"
+      loop: "{{ interface_configs }}"
+      when: juniper_output.ansible_facts.ansible_net_model in item.models
