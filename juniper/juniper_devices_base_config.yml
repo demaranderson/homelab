@@ -11,6 +11,7 @@
       - models: 
           - ex2200-c-12t-2g
           - vqfx
+          - vSRX
         config_lines: |
           delete interfaces
           set interfaces vme unit 0 family inet address {{ ansible_host }}/24
