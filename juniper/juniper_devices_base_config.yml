@@ -9,7 +9,7 @@
     
     interface_configs:
       - models: 
-          - ex2200
+          - ex2200-c-12t-2g
           - vqfx
         config_lines: |
           set interfaces vme unit 0 family inet address {{ ansible_host }}/24
