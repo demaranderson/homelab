@@ -15,10 +15,10 @@
           - delete apply-groups
           - delete system
           - delete interfaces
-          - set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/{{ fxp0_subnet }}
-          - set groups node0 system host-name {{ inventory_hostname }}
-          - set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/{{ fxp0_subnet }}
-          - set groups node1 system host-name {{ inventory_hostname }}
+          - set groups node0 interfaces fxp0 unit 0 family inet address 192.168.1.248/24
+          - set groups node0 system host-name LAB-MGMT-FW-01
+          - set groups node1 interfaces fxp0 unit 0 family inet address 192.168.1.247/24
+          - set groups node1 system host-name LAB-MGMT-FW-02
           - set apply-groups "${node}"
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
