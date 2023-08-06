@@ -17,6 +17,8 @@
           - delete interfaces
           - set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           - set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
+          - set groups node0 system host-name {{ inventory_hostname }}
+          - set groups node1 system host-name {{ inventory_hostname }}
           - set apply-groups ${node}
           - set system root-authentication encrypted-password $1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0
           - set system services ssh root-login allow
@@ -26,5 +28,5 @@
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
       retries: "{{ retry_max }}"
       delay: "{{ retry_delay }}"
-      until: result|succeeded
+      until: not result|failed
       ignore_errors: yes  # Continue with other tasks even if this one fails
