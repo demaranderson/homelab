@@ -15,4 +15,3 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
-        timeout: 60  # Increase the timeout value to 60 seconds
