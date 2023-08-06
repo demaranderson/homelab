@@ -3,6 +3,8 @@
   hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
+  vars:
+    ansible_network_os: junos
   tasks:
     - name: Load Junos configuration
       junipernetworks.junos.junos_config:
