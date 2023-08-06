@@ -11,6 +11,7 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
+          - delete apply-groups
           - delete system
           - delete interfaces
           - set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
