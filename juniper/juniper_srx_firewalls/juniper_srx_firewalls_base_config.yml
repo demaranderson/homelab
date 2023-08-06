@@ -3,6 +3,7 @@
   hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
+  serial: 1  # Execute tasks serially, one host at a time
   vars:
     ansible_network_os: junos
   tasks:
@@ -16,9 +17,7 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
+          - set system ntp server 8.7.6.5
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
 
-    - name: Commit configuration changes
-      junipernetworks.junos.junos_command:
-        commands: commit and-quit
