@@ -3,11 +3,13 @@
   hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
-  serial: 1  # Execute tasks serially, one host at a time
+  serial: 1
   vars:
     ansible_network_os: junos
-    retry_max: 3  # Maximum number of retry attempts
-    retry_delay: 10  # Delay between retry attempts (in seconds)
+    retry_max: 3
+    retry_delay: 10
+    junos_config_timeout: 120  # Increased timeout value
+
   tasks:
     - name: Load Junos configuration
       junipernetworks.junos.junos_config:
@@ -23,6 +25,7 @@
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
+        timeout: "{{ junos_config_timeout }}"  # Use the extended timeout value
       retries: "{{ retry_max }}"
       delay: "{{ retry_delay }}"
-      ignore_errors: yes  # Continue with other tasks even if this one fails
+      ignore_errors: yes
