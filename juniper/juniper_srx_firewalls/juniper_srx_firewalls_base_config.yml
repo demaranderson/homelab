@@ -1,6 +1,6 @@
 ---
 - name: Configure Juniper SRX Firewalls
-  hosts: juniper_srx_firewalls
+  hosts: LAB-MGMT-FW-01
   gather_facts: no
   connection: netconf
   serial: 1  # Set the number of devices to configure simultaneously
@@ -8,16 +8,19 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Load Junos configuration
+    - name: Configure Junos settings
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
           - delete apply-groups
           - delete system
           - delete interfaces
-          - set interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
-          - set system host-name {{ inventory_hostname }}
-          - set system root-authentication encrypted-password $1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0
+          - set groups node0 interfaces fxp0 unit 0 family inet address 192.168.1.248/24
+          - set groups node0 system host-name LAB-MGMT-FW-01
+          - set groups node1 interfaces fxp0 unit 0 family inet address 192.168.1.247/24
+          - set groups node1 system host-name LAB-MGMT-FW-02
+          - set apply-groups "${node}"
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
