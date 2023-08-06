@@ -3,11 +3,8 @@
   hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
-  serial: 1
   vars:
     ansible_network_os: junos
-    retry_max: 3
-    retry_delay: 10
 
   tasks:
     - name: Load Junos configuration
@@ -24,32 +21,3 @@
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
-        update: merge
-        confirm: 0
-        comment: "configured by junos_config"
-        confirm_commit: false
-        check_commit: false
-        backup: false
-        zeroize: false
-        src: null
-        src_format: null
-        replace: null
-        backup_options: null
-        rollback: null
-      retries: "{{ retry_max }}"
-      delay: "{{ retry_delay }}"
-      until: result is success  # Corrected conditional check
-      vars:
-        result: "{{ previous_result|default({ 'changed': true, 'success': false }) }}"
-      register: current_result
-      ignore_errors: true
-
-    - name: Check if the configuration was successfully applied
-      set_fact:
-        previous_result: "{{ current_result }}"
-      run_once: true
-
-    - name: Fail the play if configuration failed on all retries
-      fail:
-        msg: "Failed to apply configuration after {{ retry_max }} retries"
-      when: not previous_result.success
