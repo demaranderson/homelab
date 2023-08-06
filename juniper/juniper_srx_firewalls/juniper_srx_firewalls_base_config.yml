@@ -10,6 +10,9 @@
     - name: Load Junos configuration
       junipernetworks.junos.junos_config:
         lines:
+          - delete groups
+          - delete system
+          - delete interfaces
           - set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           - set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           - set apply-groups ${node}
@@ -17,7 +20,6 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
-          - set system ntp server 8.7.6.5
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
 
