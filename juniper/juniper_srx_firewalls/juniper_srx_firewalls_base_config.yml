@@ -3,6 +3,7 @@
   hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
+  serial: 1  # Set the number of devices to configure simultaneously
   vars:
     ansible_network_os: junos
 
