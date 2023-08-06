@@ -6,6 +6,8 @@
   serial: 1  # Execute tasks serially, one host at a time
   vars:
     ansible_network_os: junos
+    retry_max: 3  # Maximum number of retry attempts
+    retry_delay: 10  # Delay between retry attempts (in seconds)
   tasks:
     - name: Load Junos configuration
       junipernetworks.junos.junos_config:
@@ -22,4 +24,7 @@
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
-
+      retries: "{{ retry_max }}"
+      delay: "{{ retry_delay }}"
+      until: result is succeeded
+      ignore_errors: yes  # Continue with other tasks even if this one fails
