@@ -26,5 +26,5 @@
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
       retries: "{{ retry_max }}"
       delay: "{{ retry_delay }}"
-      until: result is succeeded
+      until: result|succeeded
       ignore_errors: yes  # Continue with other tasks even if this one fails
