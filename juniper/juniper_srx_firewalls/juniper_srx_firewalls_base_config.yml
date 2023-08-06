@@ -9,7 +9,7 @@
         lines:
           - "set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24"
           - "set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24"
-          - "set apply-groups \"\${node}\""
+          - "set apply-groups "${node}"
           - "set system root-authentication encrypted-password \"$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0\""
           - "set system services ssh root-login allow"
           - "set system services ssh protocol-version v2"
