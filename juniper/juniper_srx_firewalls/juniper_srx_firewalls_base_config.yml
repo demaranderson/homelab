@@ -1,6 +1,6 @@
 ---
 - name: Configure Juniper SRX Firewalls
-  hosts: LAB-MGMT-FW-01
+  hosts: juniper_srx_firewalls
   gather_facts: no
   connection: netconf
   serial: 1  # Set the number of devices to configure simultaneously
