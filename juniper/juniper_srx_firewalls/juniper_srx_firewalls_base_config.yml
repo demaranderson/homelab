@@ -2,7 +2,7 @@
 - name: Configure Juniper SRX Firewalls
   hosts: juniper_srx_firewalls
   gather_facts: no
-  connection: local
+  connection: netconf
   tasks:
     - name: Load Junos configuration
       junipernetworks.junos.junos_config:
@@ -16,9 +16,7 @@
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
-      delegate_to: localhost
 
     - name: Commit configuration changes
       junipernetworks.junos.junos_command:
         commands: commit and-quit
-      delegate_to: localhost
