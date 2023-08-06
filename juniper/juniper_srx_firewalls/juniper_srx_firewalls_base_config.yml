@@ -38,7 +38,7 @@
         rollback: null
       retries: "{{ retry_max }}"
       delay: "{{ retry_delay }}"
-      until: result | success
+      until: result is success  # Corrected conditional check
       vars:
         result: "{{ previous_result|default({ 'changed': true, 'success': false }) }}"
       register: current_result
