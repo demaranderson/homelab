@@ -1,6 +1,6 @@
 ---
 - name: Juniper SRX Cluster Base Configuration
-  hosts: juniper_cluster
+  hosts: juniper
   gather_facts: no
   connection: netconf
   vars:
