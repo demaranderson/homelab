@@ -7,18 +7,18 @@
     - name: Load Junos configuration
       juniper_junos_config:
         lines:
-          - "set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24"
-          - "set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24"
-          - "set apply-groups "${node}"
-          - "set system root-authentication encrypted-password \"$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0\""
-          - "set system services ssh root-login allow"
-          - "set system services ssh protocol-version v2"
-          - "set system services netconf ssh"
-          - "set interfaces fab0 fabric-options member-interfaces ge-0/0/0"
-          - "set interfaces fab1 fabric-options member-interfaces ge-7/0/0"
+          - set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
+          - set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
+          - set apply-groups ${node}
+          - set system root-authentication encrypted-password $1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0
+          - set system services ssh root-login allow
+          - set system services ssh protocol-version v2
+          - set system services netconf ssh
+          - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
+          - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
 
     - name: Commit configuration changes
       juniper_junos_command:
-        commands: "commit and-quit"
+        commands: commit and-quit
       delegate_to: localhost
       run_once: true
