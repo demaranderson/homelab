@@ -1,6 +1,6 @@
 ---
-- name: Juniper Switches, Routers, and Firewalls Base Configuration
-  hosts: juniper
+- name: Juniper SRX Cluster Base Configuration
+  hosts: juniper_cluster
   gather_facts: no
   connection: netconf
   vars:
@@ -15,3 +15,4 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
+        timeout: 60  # Increase the timeout value to 60 seconds
