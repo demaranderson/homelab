@@ -2,10 +2,10 @@
 - name: Configure Juniper SRX Firewalls
   hosts: juniper_srx_firewalls
   gather_facts: no
-  connection: netconf
+  connection: local
   tasks:
     - name: Load Junos configuration
-      juniper_junos_config:
+      junipernetworks.junos.junos_config:
         lines:
           - set groups node0 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
           - set groups node1 interfaces fxp0 unit 0 family inet address {{ ansible_host }}/24
@@ -16,9 +16,9 @@
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
+      delegate_to: localhost
 
     - name: Commit configuration changes
-      juniper_junos_command:
+      junipernetworks.junos.junos_command:
         commands: commit and-quit
       delegate_to: localhost
-      run_once: true
