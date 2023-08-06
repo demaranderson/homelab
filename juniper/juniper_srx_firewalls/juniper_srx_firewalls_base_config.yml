@@ -2,7 +2,7 @@
 - name: Configure Juniper SRX Firewalls
   hosts: juniper_srx_firewalls
   gather_facts: no
-  connection: network_cli
+  connection: netconf
   tasks:
     - name: Load Junos configuration
       juniper_junos_config:
