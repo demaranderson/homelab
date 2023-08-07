@@ -1,4 +1,3 @@
----
 - name: Configure Juniper SRX Firewalls
   hosts: juniper_srx_firewalls
   gather_facts: no
@@ -8,21 +7,21 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Configure Junos settings for node1
+    - name: Configure Junos settings
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
           - delete apply-groups
           - delete system
           - delete interfaces
+          - set groups node0 interfaces fxp0 unit 0 family inet address 192.168.1.248/24
+          - set groups node0 system host-name LAB-MGMT-FW-015
           - set groups node1 interfaces fxp0 unit 0 family inet address 192.168.1.247/24
-          - set groups node1 system host-name "{{ node1.srx_hostname }}"
+          - set groups node1 system host-name {{ node1_hostname }}
           - set apply-groups "${node}"
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
-          - set interfaces fab1 fabric-options member-interfaces ge-7/0/0"
-      vars:
-        node: "{{ cluster_node }}"
+          - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
