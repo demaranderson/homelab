@@ -1,3 +1,4 @@
+---
 - name: Configure Juniper SRX Firewalls
   hosts: juniper_srx_firewalls
   gather_facts: no
@@ -27,3 +28,21 @@
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/1
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/1
+          - set chassis cluster redundancy-group 0 node 0 priority 100
+          - set chassis cluster redundancy-group 0 node 1 priority 1
+          - set chassis cluster redundancy-group 1 node 0 priority 100
+          - set chassis cluster redundancy-group 1 node 1 priority 1
+          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
+          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
+          - set chassis cluster reth-count 2
+          - set interfaces ge-0/0/2 gigether-options redundant-parent reth1
+          - set interfaces ge-7/0/2 gigether-options redundant-parent reth1
+          - set interfaces reth0 redundant-ether-options redundancy-group 1
+          - set interfaces reth0 unit 0 family inet address 192.168.100.1/22
+          - set interfaces reth0 unit 1 family inet address 192.168.104.1/22
+          - set interfaces reth0 unit 2 family inet address 192.168.108.1/23
+          - set interfaces reth0 unit 3 family inet address 192.168.110.1/23
+          - set interfaces reth0 unit 4 family inet address 192.168.112.1/23
+          - set interfaces reth0 unit 5 family inet address 192.168.114.1/23
+          - set interfaces reth0 unit 6 family inet address 192.168.116.1/23
+          - set interfaces reth0 unit 7 family inet address 192.168.118.1/23
