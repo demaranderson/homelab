@@ -47,3 +47,20 @@
           - set interfaces reth0 unit 114 vlan-id 114 family inet address 192.168.114.1/23
           - set interfaces reth0 unit 116 vlan-id 116 family inet address 192.168.116.1/23
           - set interfaces reth0 unit 118 vlan-id 118 family inet address 192.168.118.1/23
+          
+        # Security configuration
+          - set security zones security-zone mgmt interfaces reth0.100 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.104 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.108 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.110 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.112 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.114 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.116 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt interfaces reth0.118 host-inbound-traffic system-services ping
+          - set security zones security-zone mgmt host-inbound-traffic system-services ping
+          
+        # Security policies
+          - set security policies from-zone mgmt to-zone mgmt policy allow-ping match source-address any
+          - set security policies from-zone mgmt to-zone mgmt policy allow-ping match destination-address any
+          - set security policies from-zone mgmt to-zone mgmt policy allow-ping match application junos-ping
+          - set security policies from-zone mgmt to-zone mgmt policy allow-ping then permit
