@@ -35,8 +35,55 @@
           - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
           - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
           - set chassis cluster reth-count 2
-          - set interfaces ge-0/0/2 gigether-options redundant-parent reth1
-          - set interfaces ge-7/0/2 gigether-options redundant-parent reth1
+          - set interfaces ge-0/0/2 gigether-options redundant-parent reth0
+          - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
+          - set interfaces reth0 redundant-ether-options redundancy-group 1
+          - set interfaces reth0 unit 0 family inet address 192.168.100.1/22
+          - set interfaces reth0 unit 1 family inet address 192.168.104.1/22
+          - set interfaces reth0 unit 2 family inet address 192.168.108.1/23
+          - set interfaces reth0 unit 3 family inet address 192.168.110.1/23
+          - set interfaces reth0 unit 4 family inet address 192.168.112.1/23
+          - set interfaces reth0 unit 5 family inet address 192.168.114.1/23
+          - set interfaces reth0 unit 6 family inet address 192.168.116.1/23
+          - set interfaces reth0 unit 7 family inet address 192.168.118.1/23---
+- name: Configure Juniper SRX Firewalls
+  hosts: juniper_srx_firewalls
+  gather_facts: no
+  connection: netconf
+  serial: 1  # Set the number of devices to configure simultaneously
+  vars:
+    ansible_network_os: junos
+
+  tasks:
+    - name: Configure Junos settings
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete groups
+          - delete apply-groups
+          - delete system
+          - delete interfaces
+          - set groups node0 interfaces fxp0 unit 0 family inet address {{ node0_fxp0_ip_address }}/{{ clusterfxp0_subnet }}
+          - set groups node0 system host-name {{ node0_hostname }}
+          - set groups node1 interfaces fxp0 unit 0 family inet address {{ node1_fxp0_ip_address }}/{{ clusterfxp0_subnet }}
+          - set groups node1 system host-name {{ node1_hostname }}
+          - set apply-groups "${node}"
+          - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
+          - set system services ssh root-login allow
+          - set system services ssh protocol-version v2
+          - set system services netconf ssh
+          - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
+          - set interfaces fab0 fabric-options member-interfaces ge-0/0/1
+          - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
+          - set interfaces fab1 fabric-options member-interfaces ge-7/0/1
+          - set chassis cluster redundancy-group 0 node 0 priority 100
+          - set chassis cluster redundancy-group 0 node 1 priority 1
+          - set chassis cluster redundancy-group 1 node 0 priority 100
+          - set chassis cluster redundancy-group 1 node 1 priority 1
+          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
+          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
+          - set chassis cluster reth-count 2
+          - set interfaces ge-0/0/2 gigether-options redundant-parent reth0
+          - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
           - set interfaces reth0 redundant-ether-options redundancy-group 1
           - set interfaces reth0 unit 0 family inet address 192.168.100.1/22
           - set interfaces reth0 unit 1 family inet address 192.168.104.1/22
