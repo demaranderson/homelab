@@ -12,6 +12,7 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
+          - delete security
           - delete apply-groups
           - delete system
           - delete interfaces
