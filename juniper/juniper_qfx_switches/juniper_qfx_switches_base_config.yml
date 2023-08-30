@@ -1,5 +1,5 @@
 ---
-- name: Check Juniper Model and Hostname
+- name: Configure Juniper QFX Switches
   hosts: juniper_qfx_switches
   gather_facts: no
   connection: netconf
