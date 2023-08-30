@@ -26,9 +26,7 @@
           - set system services ssh protocol-version v2
           - set system services netconf ssh
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
-          - set interfaces fab0 fabric-options member-interfaces ge-0/0/1
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
-          - set interfaces fab1 fabric-options member-interfaces ge-7/0/1
           - set chassis cluster redundancy-group 0 node 0 priority 100
           - set chassis cluster redundancy-group 0 node 1 priority 1
           - set chassis cluster redundancy-group 1 node 0 priority 100
