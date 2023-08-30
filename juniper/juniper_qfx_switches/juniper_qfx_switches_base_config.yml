@@ -1,6 +1,6 @@
 ---
 - name: Configure Juniper QFX Switches
-  hosts: juniper_ex_switches
+  hosts: juniper_qfx_switches
   gather_facts: no
   connection: network_cli
 
