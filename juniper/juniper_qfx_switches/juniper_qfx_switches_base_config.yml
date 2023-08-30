@@ -16,6 +16,9 @@
           - delete apply-groups
           - delete system
           - delete interfaces
+          - delete forwarding-options
+          - delete protocols
+          - delete vlans
           - set interfaces em0 unit 0 family inet address {{ ansible_host }}/{{ qfx_mgmt_subnet }}
           - set system host-name {{ inventory_hostname }}
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
