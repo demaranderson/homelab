@@ -10,8 +10,7 @@
   tasks:
     - name: collect default set of facts and configuration
       junipernetworks.junos.junos_facts:
-        gather_subset: all
-        gather_network_resources: all
+        gather_subset: config
       register: juniper_output
 
     - name: Display Juniper System Model
