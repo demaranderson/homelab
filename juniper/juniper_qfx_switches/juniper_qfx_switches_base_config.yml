@@ -14,4 +14,4 @@
 
     - name: Display Juniper System Model
       debug:
-        var: juniper_output.ansible_facts.ansible_net_model
+        var: juniper_output.ansible_facts
