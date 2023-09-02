@@ -25,3 +25,9 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
+
+    - name: Configure Juniper QFX Switches Hostname
+      junipernetworks.junos.junos_hostname:
+        config:
+          hostname: 'testdsfds123'
+        state: replaced
