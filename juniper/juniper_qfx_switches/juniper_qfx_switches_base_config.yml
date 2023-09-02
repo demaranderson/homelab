@@ -30,3 +30,9 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
+
+    - name: Create list of users
+      junipernetworks.junos.junos_user:
+        aggregate:
+          - {name: LAB-JUNIPER-SRX-OPERATOR, full_name: test_user2, role: operator, state: present}
+          - {name: test_user2, full_name: test_user2, role: read-only, state: present}
