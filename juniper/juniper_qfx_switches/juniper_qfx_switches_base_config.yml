@@ -25,16 +25,8 @@
           - set system services ssh protocol-version v2
           - set system services netconf ssh
 
-    - name: Configure System Settings
-      junipernetworks.junos.junos_system:
-        hostname: "{{ inventory_hostname }}"
-        root_authentication:
-          encrypted_password: "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
-        services:
-          ssh:
-            root_login: allow
-            protocol_version: v2
-        netconf:
-          ssh: true
-      tags:
-        - configure-system
+    - name: Configure Juniper QFX Switches Hostname
+      junipernetworks.junos.junos_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: replaced
