@@ -29,17 +29,13 @@
           - set system login class view-config deny-commands "(clear)|(file)|(file show)|(help)|(load)|(monitor)|(op)|(request)|(save)|(set)|(start)|(test)"
           - set system login class view-config allow-configuration "show configuration"
           - set system login class view-config deny-configuration all
+          - set system login user LAB-JUNIPER-SW-OPERATOR class operator
+          - set system login user LAB-JUNIPER-SW-READONLY class read-only
+          - set system login user LAB-JUNIPER-SW-SUPERUSER class super-user
+          - set system login user LAB-JUNIPER-SW-VIEWCONFIG class view-config
 
     - name: Configure Juniper QFX Switches Hostname
       junipernetworks.junos.junos_hostname:
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
-
-    - name: Create list of users
-      junipernetworks.junos.junos_user:
-        aggregate:
-          - {name: LAB-JUNIPER-SW-OPERATOR, role: operator, state: present}
-          - {name: LAB-JUNIPER-SW-READONLY, role: read-only, state: present}
-          - {name: LAB-JUNIPER-SW-SUPERUSER, role: super-user, state: present}
-          - {name: LAB-JUNIPER-SW-VIEWCONFIG, role: view-config, state: present}
