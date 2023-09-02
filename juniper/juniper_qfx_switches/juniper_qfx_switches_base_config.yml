@@ -33,6 +33,11 @@
           - set system login user LAB-JUNIPER-SW-READONLY class read-only
           - set system login user LAB-JUNIPER-SW-SUPERUSER class super-user
           - set system login user LAB-JUNIPER-SW-VIEWCONFIG class view-config
+          - set system time-zone EST
+          - set system authentication-order password
+          - set system authentication-order radius
+          - set system radius-options password-protocol mschap-v2
+          - set snmp community HOME_LAB authorization read-only
 
     - name: Configure Juniper QFX Switches Hostname
       junipernetworks.junos.junos_hostname:
