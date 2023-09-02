@@ -30,8 +30,3 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
-
-    - name: Enable netconf service on port 830
-      junipernetworks.junos.junos_netconf:
-        netconf_port: 830
-        state: present
