@@ -24,6 +24,11 @@
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
+          - set system login class view-config permissions view-configuration
+          - set system login class view-config allow-commands "show configuration"
+          - set system login class view-config deny-commands "(clear)|(file)|(file show)|(help)|(load)|(monitor)|(op)|(request)|(save)|(set)|(start)|(test)"
+          - set system login class view-config allow-configuration "show configuration"
+          - set system login class view-config deny-configuration all
 
     - name: Configure Juniper QFX Switches Hostname
       junipernetworks.junos.junos_hostname:
@@ -34,5 +39,7 @@
     - name: Create list of users
       junipernetworks.junos.junos_user:
         aggregate:
-          - {name: LAB-JUNIPER-SRX-OPERATOR, role: operator, state: present}
-          - {name: test_user2, full_name: test_user2, role: read-only, state: present}
+          - {name: LAB-JUNIPER-SW-OPERATOR, role: operator, state: present}
+          - {name: LAB-JUNIPER-SW-READONLY, role: read-only, state: present}
+          - {name: LAB-JUNIPER-SW-SUPERUSER, role: super-user, state: present}
+          - {name: LAB-JUNIPER-SW-VIEWCONFIG, role: view-config, state: present}
