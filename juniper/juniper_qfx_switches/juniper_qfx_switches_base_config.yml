@@ -19,7 +19,6 @@
           - delete forwarding-options
           - delete protocols
           - delete vlans
-          - set interfaces em0 unit 0 family inet address {{ ansible_host }}/{{ qfx_mgmt_subnet }}
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
