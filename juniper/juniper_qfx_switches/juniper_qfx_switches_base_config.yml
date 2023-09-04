@@ -44,7 +44,7 @@
           hostname: "{{ inventory_hostname }}"
         state: replaced
 
-    - name: Interface Config
+    - name: Configure L3 Interface
       junipernetworks.junos.junos_l3_interfaces:
         config:
           - name: em0
