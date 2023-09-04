@@ -56,7 +56,6 @@
             ipv4:
               - address: 169.254.0.2/24
             unit: 0
-      state: replaced
 
     - name: Configure Juniper Interfaces
       junipernetworks.junos.junos_interfaces:
@@ -71,4 +70,3 @@
             units:
               - name: 0
                 description: "PFE Interface"
-        state: replaced
