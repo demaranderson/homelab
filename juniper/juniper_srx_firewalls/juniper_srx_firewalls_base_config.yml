@@ -12,23 +12,58 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
-          - delete security
           - delete apply-groups
-          - delete system
-          - delete interfaces
           - set groups node0 interfaces fxp0 unit 0 family inet address {{ node0_fxp0_ip_address }}/{{ clusterfxp0_subnet }}
           - set groups node0 system host-name {{ node0_hostname }}
           - set groups node1 interfaces fxp0 unit 0 family inet address {{ node1_fxp0_ip_address }}/{{ clusterfxp0_subnet }}
           - set groups node1 system host-name {{ node1_hostname }}
           - set apply-groups "${node}"
+
+    - name: Delete Security Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete security
+
+    - name: Delete and Set System Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete system
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
           - set system services netconf ssh
+          - set system login class view-config permissions view-configuration
+          - set system login class view-config allow-commands "show configuration"
+          - set system login class view-config deny-commands "(clear)|(file)|(file show)|(help)|(load)|(monitor)|(op)|(request)|(save)|(set)|(start)|(test)"
+          - set system login class view-config allow-configuration "show configuration"
+          - set system login class view-config deny-configuration all
+          - set system login user LAB-JUNIPER-SRX-OPERATOR class operator
+          - set system login user LAB-JUNIPER-SRX-READONLY class read-only
+          - set system login user LAB-JUNIPER-SRX-SUPERUSER class super-user
+          - set system login user LAB-JUNIPER-SRX-VIEWCONFIG class view-config
+          - set system time-zone EST
+          - set system authentication-order password
+          - set system authentication-order radius
+          - set system radius-options password-protocol mschap-v2
+
+    - name: Delete and Set Interfaces Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete interfaces
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/0
           - set interfaces fab0 fabric-options member-interfaces ge-0/0/1
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/0
           - set interfaces fab1 fabric-options member-interfaces ge-7/0/1
+          - set interfaces ge-0/0/2 gigether-options redundant-parent reth0
+          - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
+          - set interfaces reth0 vlan-tagging
+          - set interfaces reth0 redundant-ether-options redundancy-group 1
+          - set interfaces reth0 unit {{ srx_reth_uplink_vlan }} vlan-id {{ srx_reth_uplink_vlan }} family inet address {{ srx_reth_uplink_ip }}/{{ srx_reth_uplink_subnet }}
+
+    - name: Delete and Set Chassis Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete chassis
           - set chassis cluster redundancy-group 0 node 0 priority 100
           - set chassis cluster redundancy-group 0 node 1 priority 1
           - set chassis cluster redundancy-group 1 node 0 priority 100
@@ -36,9 +71,3 @@
           - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
           - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
           - set chassis cluster reth-count 2
-          - set interfaces ge-0/0/2 gigether-options redundant-parent reth0
-          - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
-          - set interfaces reth0 vlan-tagging
-          - set interfaces reth0 redundant-ether-options redundancy-group 1
-          - set interfaces reth0 unit {{ srx_reth_uplink_vlan }} vlan-id {{ srx_reth_uplink_vlan }} family inet address {{ srx_reth_uplink_ip }}/{{ srx_reth_uplink_subnet }}
-
