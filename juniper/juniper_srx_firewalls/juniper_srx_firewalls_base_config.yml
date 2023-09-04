@@ -78,4 +78,4 @@
           - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic match destination-address 192.168.199.0/29
           - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic match application any
           - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic then permit
-          - set security zones security-zone SRX_UPLINK interfaces reth0.199
+          - set security zones security-zone SRX_UPLINK interfaces reth0.{{ srx_reth_uplink_vlan }}
