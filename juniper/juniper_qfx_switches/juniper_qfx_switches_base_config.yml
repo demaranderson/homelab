@@ -71,3 +71,4 @@
         units:
           - name: 0
             description: "PFE Interface"
+    state: replaced
