@@ -19,6 +19,7 @@
           - delete forwarding-options
           - delete protocols
           - delete vlans
+          - set interfaces em0 unit 0 family inet address {{ ansible_host }}/{{ qfx_mgmt_subnet }}
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
@@ -44,7 +45,7 @@
           hostname: "{{ inventory_hostname }}"
         state: replaced
 
-    - name: Configure L3 Interface
+    - name: Interface Config
       junipernetworks.junos.junos_l3_interfaces:
         config:
           - name: em0
