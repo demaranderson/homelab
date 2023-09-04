@@ -40,5 +40,5 @@
           - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
           - set interfaces reth0 vlan-tagging
           - set interfaces reth0 redundant-ether-options redundancy-group 1
-          - set interfaces reth0 unit 199 vlan-id 199 family inet address 192.168.199.1/29
+          - set interfaces reth0 unit {{ srx_reth_uplink_vlan }} vlan-id {{ srx_reth_uplink_vlan }} family inet address {{ srx_reth_uplink_ip }}/{{ srx_reth_uplink_subnet }}
 
