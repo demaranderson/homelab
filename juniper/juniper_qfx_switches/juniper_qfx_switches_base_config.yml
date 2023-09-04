@@ -8,19 +8,47 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Configure Junos settings
+    - name: Delete VLANs Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete vlans
+
+    - name: Delete Protocols Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete protocols
+
+    - name: Delete Forwarding-Options Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete forwarding-options
+
+    - name: Delete Interfaces and Set IP Addresses
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete interfaces
+          - set interfaces em0 unit 0 family inet address {{ ansible_host }}/{{ qfx_mgmt_subnet }}
+          - set interfaces em1 unit 0 family inet address 169.254.0.2/24
+
+    - name: Delete Groups Configuration
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
+
+    - name: Delete Security Configuration
+      junipernetworks.junos.junos_config:
+        lines:
           - delete security
+
+    - name: Delete Apply-Groups Configuration
+      junipernetworks.junos.junos_config:
+        lines:
           - delete apply-groups
+
+    - name: Delete and Set System Configuration
+      junipernetworks.junos.junos_config:
+        lines:
           - delete system
-          - delete interfaces
-          - delete forwarding-options
-          - delete protocols
-          - delete vlans
-          - set interfaces em0 unit 0 family inet address {{ ansible_host }}/{{ qfx_mgmt_subnet }}
-          - set interfaces em1 unit 0 family inet address 169.254.0.2/24
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
@@ -38,11 +66,9 @@
           - set system authentication-order password
           - set system authentication-order radius
           - set system radius-options password-protocol mschap-v2
-          - set snmp community HOME_LAB authorization read-only
 
     - name: Configure Juniper QFX Switches Hostname
       junipernetworks.junos.junos_hostname:
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
-
