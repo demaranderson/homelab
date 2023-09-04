@@ -1,5 +1,5 @@
 ---
-- name: Configure Juniper QFX Switches
+- name: Configure Virtual Juniper QFX Switches
   hosts: juniper_qfx_switches
   gather_facts: no
   connection: netconf
@@ -44,3 +44,30 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
+
+- name: Interface Config
+  junipernetworks.junos.junos_l3_interfaces:
+    config:
+      - name: em0
+        ipv4:
+          - address: "{{ ansible_host }}/{{ qfx_mgmt_subnet }}"
+        unit: 0
+      - name: em1
+        ipv4:
+          - address: 169.254.0.2/24
+        unit: 0
+  state: replaced
+
+- name: Configure Juniper Interfaces
+  junipernetworks.junos.junos_interfaces:
+    config:
+      - name: em0
+        enabled: true
+        units:
+          - name: 0
+            description: "Management Interface"
+      - name: em1
+        enabled: true
+        units:
+          - name: 0
+            description: "PFE Interface"
