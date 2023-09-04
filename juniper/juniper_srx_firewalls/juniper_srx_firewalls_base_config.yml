@@ -19,11 +19,6 @@
           - set groups node1 system host-name {{ node1_hostname }}
           - set apply-groups "${node}"
 
-    - name: Delete Security Configuration
-      junipernetworks.junos.junos_config:
-        lines:
-          - delete security
-
     - name: Delete and Set System Configuration
       junipernetworks.junos.junos_config:
         lines:
@@ -71,3 +66,16 @@
           - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
           - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
           - set chassis cluster reth-count 2
+
+    - name: Delete and Configure SRX Security Policy and Security Zone
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete security
+          - set security zones security-zone SRX_UPLINK address-book address SW_UPLINK 192.168.199.0/29
+          - set security zones security-zone SRX_UPLINK host-inbound-traffic system-services all
+          - set security zones security-zone SRX_UPLINK host-inbound-traffic protocols all
+          - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic match source-address any
+          - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic match destination-address 192.168.199.0/29
+          - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic match application any
+          - set security policies from-zone SRX_UPLINK to-zone untrust policy allow-traffic then permit
+          - set security zones security-zone SRX_UPLINK interfaces reth0.199
