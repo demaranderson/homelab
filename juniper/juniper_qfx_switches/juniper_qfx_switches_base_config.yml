@@ -61,12 +61,10 @@
       junipernetworks.junos.junos_interfaces:
         config:
           - name: em0
-            enabled: true
             units:
               - name: 0
                 description: "Management Interface"
           - name: em1
-            enabled: true
             units:
               - name: 0
                 description: "PFE Interface"
