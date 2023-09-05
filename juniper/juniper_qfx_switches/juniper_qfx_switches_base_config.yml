@@ -8,13 +8,6 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Delete VLANs Configuration
-      junipernetworks.junos.junos_config:
-        lines:
-          - delete vlans
-          - set vlans SW-UPLINK vlan-id {{ vrrp_group_1_vlan }}
-          - set vlans SW-UPLINK l3-interface irb.{{ vrrp_group_1_vlan }}
-
     - name: Delete Protocols Configuration
       junipernetworks.junos.junos_config:
         lines:
@@ -34,7 +27,14 @@
           - set interfaces irb unit 0 family inet address {{ vrrp_group_1_vlan }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} virtual-address {{ vrrp_group_1_vip }}
           - set interfaces irb unit 0 family inet address {{ vrrp_group_1_vlan }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} priority {{ vrrp_group_1_priority }}
           - set interfaces irb unit 0 family inet address {{ vrrp_group_1_vlan }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} preempt
-          - set interfaces irb unit 0 family inet address {{ vrrp_group_1_vlan }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} accept-data
+          - set interfaces irb unit 0 family inet address {{ vrrp_group_1_vlan }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} accept-data 
+
+    - name: Delete VLANs Configuration
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete vlans
+          - set vlans SW-UPLINK vlan-id {{ vrrp_group_1_vlan }}
+          - set vlans SW-UPLINK l3-interface irb.{{ vrrp_group_1_vlan }}
 
     - name: Delete Groups Configuration
       junipernetworks.junos.junos_config:
