@@ -8,7 +8,7 @@
     ansible_network_os: junos
 
   tasks:
-    - name: Configure Junos settings
+    - name: Configure Junos settings - Groups and Apply-Groups
       junipernetworks.junos.junos_config:
         lines:
           - delete groups
@@ -19,7 +19,7 @@
           - set groups node1 system host-name {{ node1_hostname }}
           - set apply-groups "${node}"
 
-    - name: Delete and Set System Configuration
+    - name: Configure Junos settings - System
       junipernetworks.junos.junos_config:
         lines:
           - delete system
@@ -41,7 +41,36 @@
           - set system authentication-order radius
           - set system radius-options password-protocol mschap-v2
 
-    - name: Delete and Set Interfaces Configuration
+    - name: Configure Junos settings - Chassis
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete chassis
+          - set chassis cluster redundancy-group 0 node 0 priority 100
+          - set chassis cluster redundancy-group 0 node 1 priority 1
+          - set chassis cluster redundancy-group 1 node 0 priority 100
+          - set chassis cluster redundancy-group 1 node 1 priority 1
+          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
+          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
+          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/3 weight 255
+          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/3 weight 255
+          - set chassis cluster reth-count 2
+
+    - name: Configure Junos settings - Security
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete security
+          - set security policies global policy test match source-address any
+          - set security policies global policy test match destination-address any
+          - set security policies global policy test match application any
+          - set security policies global policy test then permit
+          - set security zones security-zone reth0_uplink host-inbound-traffic system-services all
+          - set security zones security-zone reth0_uplink host-inbound-traffic protocols all
+          - set security zones security-zone reth0_uplink interfaces reth0.0
+          - set security zones security-zone reth1_uplink host-inbound-traffic system-services all
+          - set security zones security-zone reth1_uplink host-inbound-traffic protocols all
+          - set security zones security-zone reth1_uplink interfaces reth1.0
+
+    - name: Configure Junos settings - Interfaces
       junipernetworks.junos.junos_config:
         lines:
           - delete interfaces
@@ -57,32 +86,3 @@
           - set interfaces reth1 redundant-ether-options redundancy-group 1
           - set interfaces reth0 unit 0 family inet address {{ reth0_uplink_ip }}/{{ reth0_uplink_subnet }}
           - set interfaces reth1 unit 0 family inet address {{ reth1_uplink_ip }}/{{ reth1_uplink_subnet }}
-
-    - name: Delete and Set Chassis Configuration
-      junipernetworks.junos.junos_config:
-        lines:
-          - delete chassis
-          - set chassis cluster redundancy-group 0 node 0 priority 100
-          - set chassis cluster redundancy-group 0 node 1 priority 1
-          - set chassis cluster redundancy-group 1 node 0 priority 100
-          - set chassis cluster redundancy-group 1 node 1 priority 1
-          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/2 weight 255
-          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
-          - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/3 weight 255
-          - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/3 weight 255
-          - set chassis cluster reth-count 2
-
-    - name: Delete and Configure SRX Security Policy and Security Zone
-      junipernetworks.junos.junos_config:
-        lines:
-          - delete security
-          - set security policies global policy test match source-address any
-          - set security policies global policy test match destination-address any
-          - set security policies global policy test match application any
-          - set security policies global policy test then permit
-          - set security zones security-zone reth0_uplink host-inbound-traffic system-services all
-          - set security zones security-zone reth0_uplink host-inbound-traffic protocols all
-          - set security zones security-zone reth0_uplink interfaces reth0.0
-          - set security zones security-zone reth1_uplink host-inbound-traffic system-services all
-          - set security zones security-zone reth1_uplink host-inbound-traffic protocols all
-          - set security zones security-zone reth1_uplink interfaces reth1.0
