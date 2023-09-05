@@ -33,6 +33,10 @@
           - set interfaces {{ ae0_link2_interface }} description ae0
           - set interfaces {{ ae0_link1_interface }} gigether-options 802.3ad ae0
           - set interfaces {{ ae0_link2_interface }} gigether-options 802.3ad ae0
+          - set interfaces ae0 aggregated-ether-options lacp active
+          - set interfaces ae0 aggregated-ether-options lacp periodic fast
+          - set interfaces ae0 unit 0 family ethernet-switching port-mode trunk
+          - set interfaces ae0 unit 0 family ethernet-switching vlan members SW-UPLINK
           - set interfaces irb unit {{ vrrp_group_1_vlan }} family inet address {{ vrrp_group_1_ipaddress }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} virtual-address {{ vrrp_group_1_vip }}
           - set interfaces irb unit {{ vrrp_group_1_vlan }} family inet address {{ vrrp_group_1_ipaddress }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} priority {{ vrrp_group_1_priority }}
           - set interfaces irb unit {{ vrrp_group_1_vlan }} family inet address {{ vrrp_group_1_ipaddress }}/{{ vrrp_group_1_subnet }} vrrp-group {{ vrrp_group_1_group }} preempt
