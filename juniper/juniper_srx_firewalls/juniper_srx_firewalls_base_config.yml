@@ -53,7 +53,7 @@
           - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/2 weight 255
           - set chassis cluster redundancy-group 1 interface-monitor ge-0/0/3 weight 255
           - set chassis cluster redundancy-group 1 interface-monitor ge-7/0/3 weight 255
-          - set chassis cluster reth-count 2
+          - set chassis cluster reth-count 3
 
     - name: Configure Junos settings - Security
       junipernetworks.junos.junos_config:
@@ -69,6 +69,15 @@
           - set security zones security-zone reth1_uplink host-inbound-traffic system-services all
           - set security zones security-zone reth1_uplink host-inbound-traffic protocols all
           - set security zones security-zone reth1_uplink interfaces reth1.0
+          - set security zones security-zone reth2_uplink host-inbound-traffic system-services all
+          - set security zones security-zone reth2_uplink host-inbound-traffic protocols all
+          - set security zones security-zone reth2_uplink interfaces reth2.0
+
+    - name: Configure Juniper QFX Switches Hostname
+      junipernetworks.junos.junos_hostname:
+        config:
+          hostname: "{{ inventory_hostname }}"
+        state: replaced  # Replaces the hostname with the specified value
 
     - name: Configure Junos settings - Interfaces
       junipernetworks.junos.junos_config:
@@ -82,7 +91,11 @@
           - set interfaces ge-7/0/2 gigether-options redundant-parent reth0
           - set interfaces ge-0/0/3 gigether-options redundant-parent reth1
           - set interfaces ge-7/0/3 gigether-options redundant-parent reth1
+          - set interfaces ge-0/0/4 gigether-options redundant-parent reth2
+          - set interfaces ge-7/0/4 gigether-options redundant-parent reth2
           - set interfaces reth0 redundant-ether-options redundancy-group 1
           - set interfaces reth1 redundant-ether-options redundancy-group 1
+          - set interfaces reth2 redundant-ether-options redundancy-group 1
           - set interfaces reth0 unit 0 family inet address {{ reth0_uplink_ip }}/{{ reth0_uplink_subnet }}
           - set interfaces reth1 unit 0 family inet address {{ reth1_uplink_ip }}/{{ reth1_uplink_subnet }}
+          - set interfaces reth2 unit 0 family inet address {{ reth2_uplink_ip }}/{{ reth2_uplink_subnet }}
