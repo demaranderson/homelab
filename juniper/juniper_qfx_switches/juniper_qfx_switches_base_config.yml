@@ -87,3 +87,9 @@
         config:
           hostname: "{{ inventory_hostname }}"
         state: replaced
+
+    - name: Juniper LLDP Config
+      junipernetworks.junos.junos_lldp_interfaces:
+        config:
+          - name: all
+        state: replaced
