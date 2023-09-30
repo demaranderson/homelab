@@ -17,6 +17,7 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete protocols
+          - set protocols lldp interface all
 
     - name: Delete Forwarding-Options Configuration
       junipernetworks.junos.junos_config:
@@ -64,6 +65,7 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete system
+          - set system host-name {{ inventory_hostname }}
           - set system root-authentication encrypted-password "$1$/yeH./QS$wJ/oQInebOWxKE0TdVsKR0"
           - set system services ssh root-login allow
           - set system services ssh protocol-version v2
@@ -81,18 +83,6 @@
           - set system authentication-order password
           - set system authentication-order radius
           - set system radius-options password-protocol mschap-v2
-
-    - name: Configure Juniper QFX Switches Hostname
-      junipernetworks.junos.junos_hostname:
-        config:
-          hostname: "{{ inventory_hostname }}"
-        state: replaced
-
-    - name: Juniper LLDP Config
-      junipernetworks.junos.junos_lldp_interfaces:
-        config:
-          - name: all
-        state: replaced
 
     - name: Static Routes Config
       junipernetworks.junos.junos_config:
