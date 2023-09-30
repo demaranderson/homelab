@@ -94,13 +94,8 @@
           - name: all
         state: replaced
 
-    - name: Replace Static Routes
-      junipernetworks.junos.junos_static_routes:
-        config:
-          - address_families:
-            - afi: ipv4
-              routes:
-                - dest: "{{ default_static_route1 }}"
-                  next_hop:
-                    - forward_router_address: "{{ default_static_route1_next_hop }}"
-        state: replaced
+    - name: Static Routes Config
+      junipernetworks.junos.junos_config:
+        lines:
+          - delete routing-options
+		      -	set routing-options static route {{ default_static_route1 }} next-hop {{ default_static_route1_next_hop }}
