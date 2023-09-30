@@ -98,4 +98,4 @@
       junipernetworks.junos.junos_config:
         lines:
           - delete routing-options
-		      -	set routing-options static route {{ default_static_route1 }} next-hop {{ default_static_route1_next_hop }}
+          - set routing-options static route {{ default_static_route1 }} next-hop {{ default_static_route1_next_hop }}
