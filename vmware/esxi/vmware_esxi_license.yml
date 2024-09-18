@@ -1,5 +1,5 @@
 ---
-- name: SSH to all ESXi hosts and refresh license
+- name: SSH to all ESXI hosts and refresh license
   hosts: esxi
   gather_facts: false
   vars:
