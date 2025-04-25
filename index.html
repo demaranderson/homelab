@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyronyx – Universal Cybersecurity</title>
+  <link rel="icon" href="data:," />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleDark() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark') document.documentElement.classList.add('dark');
+  </script>
+
+  </head>
+  <body class="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased">
+    <header class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Kyronyx</h1>
+      <nav class="space-x-4">
+        <a href="#features" class="hover:underline">Features</a>
+        <a href="#pricing"  class="hover:underline">Pricing</a>
+        <a href="admin.html" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow">Admin</a>
+        <button onclick="toggleDark()" title="Toggle dark mode" class="ml-4">🌓</button>
+      </nav>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 py-24 text-center">
+      <h2 class="text-5xl font-extrabold mb-6">Firewall&nbsp;in&nbsp;a&nbsp;Browser<span class="hidden md:inline"> —</span><br class="md:hidden"/> for Everyone</h2>
+      <p class="text-xl mb-10 max-w-3xl mx-auto">KyroShield blocks malware, ads, and trackers on every device—no agents or apps required. Change your DNS once and you’re protected.</p>
+      <a href="admin.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-4 rounded-2xl shadow-lg">Get Started</a>
+    </section>
+
+    <section id="features" class="bg-neutral-50 dark:bg-neutral-800 py-20">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Zero‑Setup Protection</h3>
+          <p>Secure every phone, laptop, and IoT gadget—no agents, no apps, no hassle.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Full‑Spectrum Threat Intelligence</h3>
+          <p>Curated blend of CleanBrowsing, HaGeZi, Quad9, Cisco Umbrella & Kyronyx AI feeds.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Fail‑Safe DNS & Offline Caching</h3>
+          <p>Automatic fallback resolvers and local cache keep you online—even during outages.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Parental Controls & Profiles</h3>
+          <p>Age‑based filters, schedule rules, and per‑profile statistics in one click.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">AI‑Powered Analytics</h3>
+          <p>Real‑time insights, anomaly alerts, and predictive threat scoring.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Privacy‑First Design</h3>
+          <p>Zero‑log architecture, GDPR & CCPA compliant, fully anonymised data.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Enterprise Integrations</h3>
+          <p>Native syslog, Splunk, Sentinel, and REST API endpoints with token auth.</p>
+        </div>
+    
+        <div class="p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow">
+          <h3 class="text-2xl font-semibold mb-4">Global Anycast Network</h3>
+          <p>50+ edge locations for <20 ms latency worldwide.</p>
+        </div>
+    
+      </div>
+    </section>
+
+    <section id="pricing" class="max-w-5xl mx-auto px-6 py-20 text-center">
+      <h2 class="text-4xl font-bold mb-10">Simple, All‑Inclusive Pricing</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-8 border rounded-2xl">
+          <h3 class="text-2xl font-medium mb-4">Starter</h3>
+          <p class="text-5xl font-extrabold mb-4">$5</p>
+          <p class="mb-6">per month • up to 10 devices</p>
+          <a href="admin.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow">Choose Starter</a>
+        </div>
+        <div class="p-8 border-4 border-blue-600 rounded-2xl">
+          <h3 class="text-2xl font-medium mb-4">Pro</h3>
+          <p class="text-5xl font-extrabold mb-4">$15</p>
+          <p class="mb-6">per month • unlimited household devices</p>
+          <a href="admin.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow">Choose Pro</a>
+        </div>
+        <div class="p-8 border rounded-2xl">
+          <h3 class="text-2xl font-medium mb-4">Enterprise</h3>
+          <p class="text-3xl font-extrabold mb-4">Contact&nbsp;Us</p>
+          <p class="mb-6">Site‑wide filtering, SSO, SIEM & API</p>
+          <a href="mailto:sales@kyronyx.com" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow">Talk to Sales</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-neutral-100 dark:bg-neutral-950 py-10 text-center text-sm">
+      &copy; 2025 Kyronyx. All rights reserved.
+    </footer>
+  </body>
+</html>
